@@ -5,20 +5,20 @@
 #include <QFile>
 #include <QDebug>
 #include <QStringList>
-#include <QDir>
-
+#include <deck.h>
+#include <card.h>
 
 
 class fileReader : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<QString> m_fields READ fields CONSTANT)
-    Q_PROPERTY(QList<QString> m_data READ data CONSTANT)
+    Q_PROPERTY(QList<QString> m_fields READ getFields CONSTANT)
+    Q_PROPERTY(QList<QString> m_data READ getData CONSTANT)
 public:
-    fileReader(QObject *parent = nullptr);
+    explicit fileReader(QObject *parent = nullptr);
 
-    Q_INVOKABLE QList<QString> fields();
-    Q_INVOKABLE QList<QString> data();
+    Q_INVOKABLE QList<QString> getFields(); //Either Q_INVOKABLE or no ()paranthesis for function call in QML
+    Q_INVOKABLE QList<QString> getData();
 
     void readFile();
 private:

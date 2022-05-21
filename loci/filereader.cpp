@@ -1,13 +1,14 @@
 #include "filereader.h"
+deck deck1;
 
 fileReader::fileReader(QObject *parent): QObject(parent) {}
 
-QList<QString> fileReader::fields()
+QList<QString> fileReader::getFields()
 {
     return m_fields;
 }
 
-QList<QString> fileReader::data()
+QList<QString> fileReader::getData()
 {
     return m_data;
 }
@@ -16,6 +17,7 @@ void fileReader::readFile()
 {
     m_fields.clear();
     m_data.clear();
+
 
     QList<QByteArray> byte_fields;
     QList<QByteArray> byte_data;
@@ -26,16 +28,25 @@ void fileReader::readFile()
     if(file.open(QIODevice::ReadOnly))
     {
         QByteArray line = file.readLine();
-
         byte_fields = line.split(',');
+        foreach(QByteArray byte, byte_fields) //QByteArray undefined in QML
+        {
+            m_fields.append(QString(byte));
+        }
+        deck1.setFieldNum(m_fields.length());
+        deck1.setFields(m_fields);
 
         while(!file.atEnd())
         {
+           m_data.clear();
            QByteArray line = file.readLine();
-
-           byte_data += line.split(',');
+           byte_data = line.split(',');
+           foreach(QByteArray byte, byte_data) //QByteArray undefined in QML
+           {
+               m_data.append(QString(byte));
+           }
+           deck1.appendCardList(nullptr, m_data);
         }
-
         file.close();
     }
     else
@@ -43,16 +54,7 @@ void fileReader::readFile()
         qInfo() << file.errorString();
     }
 
-    foreach(QByteArray byte, byte_fields) //QByteArray undefined in QML
-    {
-        m_fields.append(QString(byte));
-    }
-
-    foreach(QByteArray byte, byte_data) //QByteArray undefined in QML
-    {
-        m_data.append(QString(byte));
-    }
-
     qInfo() << byte_fields;
     qInfo() << byte_data;
+
 }

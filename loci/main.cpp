@@ -7,6 +7,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
+    deck deck1;
+
     fileReader reader;
     reader.readFile();
 

@@ -1,10 +1,14 @@
 QT += quick
 
 SOURCES += \
+        card.cpp \
+        deck.cpp \
         main.cpp\
         filereader.cpp
 
 HEADERS += \
+    card.h \
+    deck.h \
     filereader.h
 
 resources.files = main.qml \

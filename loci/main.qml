@@ -10,7 +10,7 @@ Window {
     Loader {
         id: page_loader
         anchors.fill: parent
-        source : "cardscreen.qml"
+        source : "homescreen.qml"
         visible: true
     }
 }
