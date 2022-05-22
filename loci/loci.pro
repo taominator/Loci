@@ -4,12 +4,16 @@ SOURCES += \
         card.cpp \
         deck.cpp \
         main.cpp\
-        filereader.cpp
+        filereader.cpp \
+        selectedcard.cpp \
+        selecteddeck.cpp
 
 HEADERS += \
     card.h \
     deck.h \
-    filereader.h
+    filereader.h \
+    selectedcard.h \
+    selecteddeck.h
 
 resources.files = main.qml \
     FieldBox.qml \
@@ -32,3 +36,8 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    CardInfo.qml \
+    CardInfoTable.qml \
+    DeckInfo.qml
