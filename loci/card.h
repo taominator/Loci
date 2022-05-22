@@ -10,10 +10,11 @@ class card : public QObject
 public:
     explicit card(QObject *parent = nullptr, QList<QString> data = QList<QString>());
 
-    QList<QString> getData();
-    QString getFieldContent(int dataNum);
+    Q_INVOKABLE QList<QString> getData();
 
-    void setData(QList<QString> data);
+    Q_INVOKABLE void setData(QList<QString> data);
+
+    QString getFieldContent(int dataNum);
 
 signals:
 

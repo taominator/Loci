@@ -1,17 +1,17 @@
 QT += quick
 
 SOURCES += \
+        appfunctions.cpp \
         card.cpp \
         deck.cpp \
         main.cpp\
-        filereader.cpp \
         selectedcard.cpp \
         selecteddeck.cpp
 
 HEADERS += \
+    appfunctions.h \
     card.h \
     deck.h \
-    filereader.h \
     selectedcard.h \
     selecteddeck.h
 

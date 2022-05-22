@@ -12,7 +12,7 @@ Item {
         }
         color: "red"
         Text{
-            text: file_reader.getFields()[0] //Either Q_INVOKABLE or no ()paranthesis for function call in QML
+            text: deck.getFields()[0] //Either Q_INVOKABLE or no ()paranthesis for function call in QML
             font.pixelSize: parent.height / 1.5
         }
 
@@ -28,7 +28,7 @@ Item {
         }
         color: "orange"
         Text{
-            text: file_reader.getFields()[1]
+            text: deck.getFields()[1]
             font.pixelSize: parent.height / 1.5
         }
     }
@@ -43,7 +43,7 @@ Item {
         }
         color: "yellow"
         Text{
-            text: file_reader.getFields()[2]
+            text: deck.getFields()[2]
             font.pixelSize: parent.height / 1.5
         }
     }
@@ -58,7 +58,7 @@ Item {
         }
         color: "green"
         Text{
-            text: file_reader.getFields()[3]
+            text: deck.getFields()[3]
             font.pixelSize: parent.height / 1.5
         }
     }
@@ -73,7 +73,7 @@ Item {
         }
         color: "blue"
         Text{
-            text: file_reader.getFields()[4]
+            text: deck.getFields()[4]
             font.pixelSize: parent.height / 1.5
         }
     }
@@ -88,7 +88,7 @@ Item {
         }
         color: "indigo"
         Text{
-            text: file_reader.getFields()[5]
+            text: deck.getFields()[5]
             font.pixelSize: parent.height / 1.5
         }
     }
@@ -103,7 +103,7 @@ Item {
         }
         color: "purple"
         Text{
-            text: file_reader.getFields()[6]
+            text: deck.getFields()[6]
             font.pixelSize: parent.height / 1.5
         }
     }

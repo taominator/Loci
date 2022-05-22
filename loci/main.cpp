@@ -2,15 +2,15 @@
 #include <QQmlApplicationEngine>
 #include <filereader.h>
 #include <QQmlContext>
+#include <appfunctions.h>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    deck deck1;
+    deck* deck1 = new deck;
 
-    fileReader reader;
-    reader.readFile();
+    readFiles(deck1);
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/loci/main.qml"_qs);
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    engine.rootContext()->setContextProperty("file_reader", &reader);
+    engine.rootContext()->setContextProperty("deck", deck1);
 
     engine.load(url);
     return app.exec();
