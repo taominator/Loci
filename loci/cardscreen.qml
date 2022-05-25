@@ -1,6 +1,6 @@
 import QtQuick
 
-Item {
+/*Item {
     anchors.fill: parent
     Rectangle{
         id: field1
@@ -108,4 +108,20 @@ Item {
         }
     }
 
+}*/
+
+Item {
+    anchors.fill: parent
+
+    Component {
+        id: cardDelegate
+        Text {
+            text:
+        }
+    }
+
+    ListView {
+        anchors.fill: parent
+        model: selectedCard.getCardModel()
+    }
 }

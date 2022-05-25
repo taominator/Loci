@@ -11,10 +11,30 @@ QList<QString> deck::getFields() {return m_fields;}
 QList<card*> deck::getCardList() {return m_cardList;} // QList<QObject> not possible! Must be QList<*QObject>
 int deck::getCardNum() {return m_cardNum;}
 
-void deck::setFieldNum(int num) {m_fieldNum = num;}
-void deck::setFields(QList<QString> fields) {m_fields = fields;}
-void deck::setCardList(QList<card*> cardList) {m_cardList = cardList;} // QList<QObject> not possible! Must be QList<*QObject>
-void deck::updateCardNum() {m_cardNum = m_cardList.length();}
+
+
+void deck::setFieldNum(int num)
+{
+    m_fieldNum = num;
+    emit fieldNumChanged();
+}
+void deck::setFields(QList<QString> fields)
+{
+    m_fields = fields;
+    emit fieldsChanged();
+}
+void deck::setCardList(QList<card*> cardList)
+{
+    m_cardList = cardList;
+    emit cardListChanged();
+} // QList<QObject> not possible! Must be QList<*QObject>
+
+
+
+void deck::updateCardNum()
+{
+    m_cardNum = m_cardList.length();
+}
 
 void deck::appendCardList(QObject *parent, QList<QString> data)
 {
