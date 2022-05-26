@@ -3,6 +3,7 @@ QT += quick
 SOURCES += \
         appfunctions.cpp \
         card.cpp \
+        cardmodel.cpp \
         deck.cpp \
         main.cpp\
         selectedcard.cpp \
@@ -11,6 +12,7 @@ SOURCES += \
 HEADERS += \
     appfunctions.h \
     card.h \
+    cardmodel.h \
     deck.h \
     selectedcard.h \
     selecteddeck.h

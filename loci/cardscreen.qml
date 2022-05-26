@@ -113,15 +113,40 @@ import QtQuick
 Item {
     anchors.fill: parent
 
-    Component {
-        id: cardDelegate
-        Text {
-            text:
-        }
-    }
-
     ListView {
         anchors.fill: parent
-        model: selectedCard.getCardModel()
+        model: cardmodel
+        delegate: Rectangle {
+
+            height: parent.height / 7
+            width: parent.width / 7
+
+            Text {
+                id: field_section
+
+                height: parent.height /2
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    top: parent.top
+                }
+
+                text: model.field
+                font.pixelSize: parent.height / 3
+            }
+            Text {
+                id: data_section
+
+                height: parent.height /2
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+
+                text: model.data
+                font.pixelSize: parent.height / 3
+            }
+        }
     }
 }

@@ -4,13 +4,16 @@
 #include <QQmlContext>
 #include <appfunctions.h>
 #include <selectedcard.h>
+#include <cardmodel.h>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     deck* deck1 = new deck;
-    selectedcard* selectedCard = new selectedcard;
+    deck1->setParent(&app);
+    cardmodel* cardModel = new cardmodel;
+    cardModel->setParent(&app);
 
     readFiles(deck1);
 
@@ -23,15 +26,14 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
 
 
-    card* card1 = deck1->getCardList()[0];
-    selectedCard->setSelectedCardPointer(card1);
+    card* card1 = deck1->getCardList().at(0);
+    cardModel->setSelectedCard(deck1, card1);
 
     engine.rootContext()->setContextProperty("deck", deck1);
-    engine.rootContext()->setContextProperty("selectedCard", selectedCard);
+    engine.rootContext()->setContextProperty("cardmodel", cardModel);
 
     engine.load(url);
 
-    delete deck1;
-    delete selectedCard;
+
     return app.exec();
 }

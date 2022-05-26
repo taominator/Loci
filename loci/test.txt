@@ -1,2 +1,2 @@
 Kanji,Kanji Meaning,Radicals,Keyword,My Story,Koohi Story 1,Koohi Story 2
-見,See,Eye, Human Legs,Mike Wazowski,My Story,Koohi Story 1,Koohi Story 2
+見,See,Eye,Mike Wazowski,My Story,Koohi Story 1,Koohi Story 2

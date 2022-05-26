@@ -32,8 +32,8 @@ QString selectedcard::getFieldContent(int dataNum){return m_data[dataNum-1];}
 void selectedcard::updateSelectedCardData(){m_selectedCardPointer->setData(m_data);}
 
 
-void selectedcard::cardModelChanged()
+/*void selectedcard::cardModelChanged()
 {
     editData();
     updateSelectedCardData();
-}
+}*/

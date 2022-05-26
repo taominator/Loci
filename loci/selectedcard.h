@@ -14,7 +14,7 @@ class selectedcard : public QObject
     Q_PROPERTY (card* selectedCardPointer READ getSelectedCardPointer WRITE setSelectedCardPointer NOTIFY selectedCardPointerChanged)
 
     //StringListModel for editing user changes (" to "" for csv file)
-    Q_PROPERTY(QStringListModel* cardModel data READ getCardModel NOTIFY cardModelChanged)
+    Q_PROPERTY(QStringListModel* cardModel READ getCardModel NOTIFY cardModelChanged)
 
 public:
     explicit selectedcard(QObject *parent = nullptr);
