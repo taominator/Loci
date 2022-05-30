@@ -5,6 +5,8 @@
 #include <appfunctions.h>
 #include <selectedcard.h>
 #include <cardmodel.h>
+#include <dbmanager.h>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +36,9 @@ int main(int argc, char *argv[])
 
     engine.load(url);
 
+    dbmanager DBManager;
+
+    qInfo() << DBManager.m_tables;
 
     return app.exec();
 }

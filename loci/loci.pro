@@ -1,9 +1,10 @@
-QT += quick
+QT += quick sql
 
 SOURCES += \
         appfunctions.cpp \
         card.cpp \
         cardmodel.cpp \
+        dbmanager.cpp \
         deck.cpp \
         main.cpp\
         selectedcard.cpp \
@@ -13,6 +14,7 @@ HEADERS += \
     appfunctions.h \
     card.h \
     cardmodel.h \
+    dbmanager.h \
     deck.h \
     selectedcard.h \
     selecteddeck.h
