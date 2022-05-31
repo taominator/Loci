@@ -1,10 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <filereader.h>
+//#include <filereader.h>
 #include <QQmlContext>
-#include <appfunctions.h>
-#include <selectedcard.h>
-#include <cardmodel.h>
+//#include <appfunctions.h>
+//#include <selectedcard.h>
+//#include <cardmodel.h>
 #include <dbmanager.h>
 #include <QDebug>
 
@@ -12,12 +12,16 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    deck* deck1 = new deck;
+    /*deck* deck1 = new deck;
     deck1->setParent(&app);
     cardmodel* cardModel = new cardmodel;
     cardModel->setParent(&app);
 
-    readFiles(deck1);
+    readFiles(deck1);*/
+
+    dbmanager DBManager;
+    DBManager.setModel("test");
+
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/loci/main.qml"_qs);
@@ -28,17 +32,22 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
 
 
-    card* card1 = deck1->getCardList().at(0);
+    /*card* card1 = deck1->getCardList().at(0);
     cardModel->setSelectedCard(deck1, card1);
 
     engine.rootContext()->setContextProperty("deck", deck1);
-    engine.rootContext()->setContextProperty("cardmodel", cardModel);
+    engine.rootContext()->setContextProperty("cardmodel", cardModel);*/
+    engine.rootContext()->setContextProperty("m_model", &DBManager.m_model);
 
     engine.load(url);
 
-    dbmanager DBManager;
 
-    qInfo() << DBManager.m_tables;
+    qInfo() << DBManager.m_model.record();
+    qInfo() << DBManager.m_db.isOpen();
+    qInfo() << DBManager.m_decklist.at(1).m_table;
+    qInfo() << "---------";
+    qInfo() << DBManager.m_decklist.at(0).m_fields;
+    qInfo() << DBManager.m_decklist.at(1).m_fields;
 
     return app.exec();
 }

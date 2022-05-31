@@ -8,7 +8,8 @@ SOURCES += \
         deck.cpp \
         main.cpp\
         selectedcard.cpp \
-        selecteddeck.cpp
+        selecteddeck.cpp \
+        tablemodel.cpp
 
 HEADERS += \
     appfunctions.h \
@@ -17,14 +18,16 @@ HEADERS += \
     dbmanager.h \
     deck.h \
     selectedcard.h \
-    selecteddeck.h
+    selecteddeck.h \
+    tablemodel.h
 
 resources.files = main.qml \
     FieldBox.qml \
     TopBar.qml \
     cardscreen.qml \
     deckscreen.qml \
-    homescreen.qml
+    homescreen.qml \
+    test.qml
 
 
 resources.prefix = /$${TARGET}
@@ -44,4 +47,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     CardInfo.qml \
     CardInfoTable.qml \
-    DeckInfo.qml
+    DeckInfo.qml \
+
+
