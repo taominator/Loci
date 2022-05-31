@@ -20,6 +20,10 @@ Item {
         rowHeightProvider: function (column) { return 60; }
         anchors.fill: parent
 
+        //leftMargin: rowsHeader.implicitWidth
+        topMargin: columnsHeader.implicitHeight
+
+
         ScrollBar.horizontal: ScrollBar{}
         ScrollBar.vertical: ScrollBar{}
         clip: true

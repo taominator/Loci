@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     readFiles(deck1);*/
 
     dbmanager DBManager;
-    DBManager.setModel("test");
+    DBManager.setModel("test2");
 
 
     QQmlApplicationEngine engine;
