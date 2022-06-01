@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Window
+//import QtQuick.Window
 import QtQuick.Controls
 
 Item {
@@ -15,6 +15,8 @@ Item {
 
     TableView {
         id: tableView
+
+        boundsBehavior: Flickable.StopAtBounds
 
         columnWidthProvider: function (column) { return 100; }
         rowHeightProvider: function (column) { return 60; }
@@ -33,10 +35,13 @@ Item {
         // Table Body
 
         delegate: Rectangle {
+            border.color: "gray"
+            clip: true
             Text {
                 text: display // This is set in mysqlmodel.cpp roleNames()
                 anchors.fill: parent
                 anchors.margins: 10
+                elide: Text.ElideRight
                 color: 'black'
                 font.pixelSize: 15
                 verticalAlignment: Text.AlignVCenter
@@ -50,17 +55,24 @@ Item {
             id: columnsHeader
             y: tableView.contentY
             z: 2
+            clip:true
+
             Repeater {
                 model: tableView.columns > 0 ? tableView.columns : 1
-                Label {
+                delegate: Rectangle {
                     width: tableView.columnWidthProvider(modelData)
                     height: 35
-                    text: m_model.headerData(modelData, Qt.Horizontal)
-                    font.pixelSize: 15
-                    padding: 10
-                    verticalAlignment: Text.AlignVCenter
+                    color: "#ccc"
+                    border.color: "gray"
+                    Label {
+                        anchors.fill: parent
+                        text: m_model.headerData(modelData, Qt.Horizontal)
+                        elide: Text.ElideRight
+                        font.pixelSize: 15
+                        padding: 10
+                        verticalAlignment: Text.AlignVCenter
 
-                    background: Rectangle { color: "#ccc" }
+                    }
                 }
             }
         }
@@ -70,3 +82,9 @@ Item {
         ScrollIndicator.vertical: ScrollIndicator { }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:8}D{i:7}D{i:6}D{i:1}
+}
+##^##*/
