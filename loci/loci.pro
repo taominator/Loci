@@ -27,6 +27,7 @@ resources.files = main.qml \
     cardscreen.qml \
     deckscreen.qml \
     homescreen.qml \
+    DeckTableView.qml \
     test.qml
 
 
@@ -48,5 +49,6 @@ DISTFILES += \
     CardInfo.qml \
     CardInfoTable.qml \
     DeckInfo.qml \
+    DeckTableView.qml
 
 

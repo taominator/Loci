@@ -10,6 +10,7 @@
 class tablemodel : public QSqlQueryModel
 {
     Q_OBJECT
+    Q_PROPERTY(int defaultColumnWidth READ getDefaultColumnWidth CONSTANT)
 public:
     explicit tablemodel(QObject *parent = nullptr);
 
@@ -22,6 +23,7 @@ public:
     void generateColumnWidths();
     Q_INVOKABLE int getColumnWidth(int n);
     Q_INVOKABLE void setColumnWidth(int n, int new_width);
+    int getDefaultColumnWidth();
 
 //private :
 public:
@@ -29,6 +31,7 @@ public:
     QHash<int, QByteArray> m_roleNames;
 
     QHash<int, int> m_columnWidths;
+    int m_defaultColumnWidth;
 
 signals:
 

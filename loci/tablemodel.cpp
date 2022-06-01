@@ -3,7 +3,7 @@
 tablemodel::tablemodel(QObject *parent)
     : QSqlQueryModel{parent}
 {
-
+    m_defaultColumnWidth = 100;
 }
 
 void tablemodel::setQuery( QSqlQuery *query)
@@ -58,7 +58,7 @@ void tablemodel::generateRoleNames()
 void tablemodel::generateColumnWidths()
 {
     for(int i = 0; i < record().count(); i ++){
-        m_columnWidths[i] = 100;
+        m_columnWidths[i] = m_defaultColumnWidth;
     }
 }
 
@@ -69,4 +69,9 @@ int tablemodel::getColumnWidth(int n){
 void tablemodel::setColumnWidth(int n, int new_width)
 {
     m_columnWidths.insert(n, new_width);
+}
+
+int tablemodel::getDefaultColumnWidth()
+{
+    return m_defaultColumnWidth;
 }
