@@ -21,6 +21,7 @@ public:
 
     void generateColumnWidths();
     Q_INVOKABLE int getColumnWidth(int n);
+    Q_INVOKABLE void setColumnWidth(int n, int new_width);
 
 //private :
 public:

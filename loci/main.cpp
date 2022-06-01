@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     engine.load(url);
 
 
-    qInfo() << DBManager.m_model.record();
+    /*qInfo() << DBManager.m_model.record();
     qInfo() << DBManager.m_db.isOpen();
     qInfo() << DBManager.m_decklist.at(1).m_table;
     qInfo() << "---------";
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     qInfo() << "---------";
     qInfo() << DBManager.m_model.m_roleNames;
     qInfo() << "---------";
-    qInfo() << DBManager.m_model.m_columnWidths;
+    qInfo() << DBManager.m_model.m_columnWidths;*/
 
     return app.exec();
 }

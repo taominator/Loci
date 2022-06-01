@@ -65,3 +65,8 @@ void tablemodel::generateColumnWidths()
 int tablemodel::getColumnWidth(int n){
     return m_columnWidths.value(n);
 }
+
+void tablemodel::setColumnWidth(int n, int new_width)
+{
+    m_columnWidths.insert(n, new_width);
+}

@@ -20,7 +20,7 @@ Item {
 
         //columnWidthProvider: function (column) { return 100; }
         columnWidthProvider: function (column) { return m_model.getColumnWidth(column) }
-        rowHeightProvider: function (column) { return 60; }
+        rowHeightProvider: function (column) { return 40; }
         anchors.fill: parent
 
         //leftMargin: rowsHeader.implicitWidth
@@ -78,11 +78,37 @@ Item {
                         padding: 10
                         verticalAlignment: Text.AlignVCenter
 
-
                         Component.onCompleted: {
                         console.log(modelData)
                         }
                     }
+
+                    MouseArea {
+                           id: mouseAreaLeft
+
+                           property int oldMouseX
+
+                           anchors.right: parent.right
+                           anchors.bottom: parent.bottom
+                           width: 15
+                           height: 35
+                           hoverEnabled: true
+
+                           onPressed: {
+                               oldMouseX = mouseX
+                               //console.log("clicked")
+                           }
+
+                           onPositionChanged: {
+                               if (pressed) {
+                                   parent.width = parent.width + (mouseX - oldMouseX)
+                                   m_model.setColumnWidth(modelData, parent.width + (mouseX - oldMouseX))
+                                   columnsHeader.forceLayout()
+                                   tableView.forceLayout()
+                                   //console.log("position changed")
+                               }
+                           }
+                       }
                 }
             }
         }
