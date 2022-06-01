@@ -19,10 +19,15 @@ public:
 
     Q_INVOKABLE void callSql(QString queryString);
 
-private :
+    void generateColumnWidths();
+    Q_INVOKABLE int getColumnWidth(int n);
+
+//private :
+public:
     void generateRoleNames();
     QHash<int, QByteArray> m_roleNames;
 
+    QHash<int, int> m_columnWidths;
 
 signals:
 

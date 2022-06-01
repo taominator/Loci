@@ -44,6 +44,7 @@ void tablemodel::callSql(QString queryString)
 {
     QSqlQuery qry(queryString);
     this->setQuery(&qry);
+    generateColumnWidths();
 }
 
 void tablemodel::generateRoleNames()
@@ -52,4 +53,15 @@ void tablemodel::generateRoleNames()
     for( int i = 0; i < record().count(); i ++) {
         m_roleNames.insert(Qt::UserRole + i + 1, record().fieldName(i).toUtf8());
     }
+}
+
+void tablemodel::generateColumnWidths()
+{
+    for(int i = 0; i < record().count(); i ++){
+        m_columnWidths[i] = 100;
+    }
+}
+
+int tablemodel::getColumnWidth(int n){
+    return m_columnWidths.value(n);
 }

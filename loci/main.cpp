@@ -48,6 +48,10 @@ int main(int argc, char *argv[])
     qInfo() << "---------";
     qInfo() << DBManager.m_decklist.at(0).m_fields;
     qInfo() << DBManager.m_decklist.at(1).m_fields;
+    qInfo() << "---------";
+    qInfo() << DBManager.m_model.m_roleNames;
+    qInfo() << "---------";
+    qInfo() << DBManager.m_model.m_columnWidths;
 
     return app.exec();
 }

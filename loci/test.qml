@@ -18,7 +18,8 @@ Item {
 
         boundsBehavior: Flickable.StopAtBounds
 
-        columnWidthProvider: function (column) { return 100; }
+        //columnWidthProvider: function (column) { return 100; }
+        columnWidthProvider: function (column) { return m_model.getColumnWidth(column) }
         rowHeightProvider: function (column) { return 60; }
         anchors.fill: parent
 
@@ -46,6 +47,10 @@ Item {
                 font.pixelSize: 15
                 verticalAlignment: Text.AlignVCenter
             }
+
+            Component.onCompleted: {
+            console.log(display)
+            }
         }
 
 
@@ -60,7 +65,8 @@ Item {
             Repeater {
                 model: tableView.columns > 0 ? tableView.columns : 1
                 delegate: Rectangle {
-                    width: tableView.columnWidthProvider(modelData)
+                    //width: tableView.columnWidthProvider(modelData)
+                    width: m_model.getColumnWidth(modelData)
                     height: 35
                     color: "#ccc"
                     border.color: "gray"
@@ -72,6 +78,10 @@ Item {
                         padding: 10
                         verticalAlignment: Text.AlignVCenter
 
+
+                        Component.onCompleted: {
+                        console.log(modelData)
+                        }
                     }
                 }
             }
@@ -83,8 +93,3 @@ Item {
     }
 }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:8}D{i:7}D{i:6}D{i:1}
-}
-##^##*/
