@@ -9,6 +9,7 @@ SOURCES += \
         main.cpp\
         selectedcard.cpp \
         selecteddeck.cpp \
+        settings.cpp \
         tablemodel.cpp
 
 HEADERS += \
@@ -19,6 +20,7 @@ HEADERS += \
     deck.h \
     selectedcard.h \
     selecteddeck.h \
+    settings.h \
     tablemodel.h
 
 resources.files = main.qml \

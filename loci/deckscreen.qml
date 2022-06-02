@@ -4,10 +4,21 @@ Item {
     anchors.fill: parent
 
     Rectangle {
-        anchors.fill: parent
+        id: redRect
+        height: parent.height
+        width: parent.width * (4/5)
+        color: "red"
+        anchors {
+            top: parent.top
+            right: parent.right
+        }
+
         DeckTableView {
-            anchors.fill: parent
+        }
+
+        Component.onCompleted: {
+            console.log("Rectangle Height: " + redRect.height)
+            console.log("Rectangle Width: " + redRect.width)
         }
     }
-
 }

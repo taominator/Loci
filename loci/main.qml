@@ -3,8 +3,9 @@ import "."
 
 Window {
     id: mainWindow
-    width: 640
-    height: 480
+    property int maxWidth
+    property int maxHeight
+    visibility: "Maximized"
     visible: true
     title: qsTr("Loci")
 
@@ -13,5 +14,21 @@ Window {
         anchors.fill: parent
         source : "deckscreen.qml"
         visible: true
+    }
+
+    Component.onCompleted: {
+        maxWidth = mainWindow.width
+        maxHeight = mainWindow.height
+        mainWindow.visibility = "Windowed"
+        mainWindow.width = 640
+        mainWindow.height = 480
+        x = screen.width / 2 - width / 2
+        y = screen.height / 2 - height / 2
+        /*console.log(width)
+        console.log(height)
+        console.log(maxWidth)
+        console.log(maxHeight)
+        console.log(screen.width)
+        console.log(screen.height)*/
     }
 }

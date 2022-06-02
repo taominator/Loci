@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 Item {
     id: item
-    anchors.fill:parent
+    anchors.fill: parent
 
     // Uncomment this, if you want to call query from qml
     // If you uncomment this, remember to comment out the followin line in main.cpp
@@ -22,6 +22,7 @@ Item {
         //columnWidthProvider: function (column) { return 100; }
         columnWidthProvider: function (column) { return m_model.getColumnWidth(column) }
         rowHeightProvider: function (column) { return 40; }
+
         anchors.fill: parent
 
         //leftMargin: rowsHeader.implicitWidth
@@ -60,6 +61,7 @@ Item {
             clip:true
 
             Repeater {
+                id: repeater
                 model: tableView.columns > 0 ? tableView.columns : 1
                 delegate: Rectangle {
                     width: tableView.columnWidthProvider(modelData)
@@ -108,11 +110,13 @@ Item {
         ScrollIndicator.horizontal: ScrollIndicator { }
         ScrollIndicator.vertical: ScrollIndicator { }
 
-        /*Component.onCompleted: {
-            m_model.setColumnWidth(tableView.columns-1, mainWindow.width - m_model.getColumnWidth(0))
-            columnsHeader.forceLayout()
+        /*property int lastColumnSize
+        Component.onCompleted: {
+            lastColumnSize = settings.maxScreenWidth - m_model.getColumnWidth(0)
+            m_model.setColumnWidth(tableView.columns-1, item.width - m_model.getColumnWidth(0))
+            repeater.itemAt(tableView.columns-1).width = lastColumnSize
             tableView.forceLayout()
-            console.log(mainWindow.width)
+            console.log(item.width)
         }*/
     }
 }
