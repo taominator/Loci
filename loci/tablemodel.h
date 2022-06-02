@@ -6,11 +6,14 @@
 #include <QSqlRecord>
 #include <QSqlField>
 #include <QSqlQuery>
+#include <QDebug>
 
 class tablemodel : public QSqlQueryModel
 {
     Q_OBJECT
     Q_PROPERTY(int defaultColumnWidth READ getDefaultColumnWidth CONSTANT)
+    Q_PROPERTY(int borderWidth READ getBorderWidth CONSTANT)
+
 public:
     explicit tablemodel(QObject *parent = nullptr);
 
@@ -22,16 +25,26 @@ public:
 
     void generateColumnWidths();
     Q_INVOKABLE int getColumnWidth(int n);
-    Q_INVOKABLE void setColumnWidth(int n, int new_width);
-    int getDefaultColumnWidth();
+    Q_INVOKABLE void setColumnWidth(int n, int new_width);    
+    Q_INVOKABLE int getDefaultColumnWidth();
+    Q_INVOKABLE void setTableWidth(int width);
+    int getBorderWidth();
+    Q_INVOKABLE void updateSumColumnWidths(int num);
+    Q_INVOKABLE void correctLastColumnWidth();
+    Q_INVOKABLE int lastColumnWidth();
+    Q_INVOKABLE bool tooSmallTable();
 
-//private :
+
+    Q_INVOKABLE void print();
 public:
     void generateRoleNames();
     QHash<int, QByteArray> m_roleNames;
 
     QHash<int, int> m_columnWidths;
     int m_defaultColumnWidth;
+    int m_borderWidth = 20;
+    int m_tableWidth;
+    int m_sumColumnWidths;
 
 signals:
 

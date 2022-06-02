@@ -79,45 +79,73 @@ Item {
                     }
 
                     MouseArea {
-                           id: mouseAreaLeft
+                        id: mouseAreaLeft
 
-                           property int oldMouseX
+                        property int oldMouseX
 
-                           anchors.right: parent.right
-                           anchors.bottom: parent.bottom
-                           width: 15
-                           height: 35
-                           hoverEnabled: true
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        width: 15
+                        height: 35
+                        hoverEnabled: true
 
-                           onPressed: {
-                               oldMouseX = mouseX
-                               //console.log("clicked")
-                           }
+                        property int change
+                        property int oldWidth
+                        onPressed: {
+                            oldMouseX = mouseX
+                            //console.log("clicked")
+                        }
 
-                           onPositionChanged: {
-                               if (pressed) {
-                                   parent.width = parent.width + (mouseX - oldMouseX)
-                                   m_model.setColumnWidth(modelData, parent.width + (mouseX - oldMouseX))
-                                   columnsHeader.forceLayout()
-                                   tableView.forceLayout()
-                                   //console.log("position changed")
-                               }
-                           }
-                       }
+                        /*onPositionChanged: {
+                            if(pressed){
+                                if(m_model.getColumnWidth(modelData) > 100) {
+                                change = (mouseX - oldMouseX)
+                                m_model.setColumnWidth(modelData, parent.width + change)
+                                //m_model.correctLastColumnWidth
+                                parent.width = parent.width + change
+                                columnsHeader.forceLayout()
+                                tableView.forceLayout()
+                                m_model.updateSumColumnWidths(change)
+                                m_model.print()
+                                }
+                            }
+                        }*/
+
+                        onPositionChanged: {
+                            if (pressed) {
+                                change = (mouseX - oldMouseX)
+                                if(change > 0){
+                                    parent.width = parent.width + change
+                                    m_model.setColumnWidth(modelData, parent.width + change)
+                                    columnsHeader.forceLayout()
+                                    tableView.forceLayout()
+                                }
+                                if(change < 0){
+                                    if(parent.width > 100){
+                                    parent.width = parent.width + change
+                                    m_model.setColumnWidth(modelData, parent.width + change)
+                                    columnsHeader.forceLayout()
+                                    tableView.forceLayout()
+                                    }
+                                }
+                                if(parent.width < 100){
+                                parent.width = m_model.getDefaultColumnWidth()
+                                m_model.setColumnWidth(modelData, m_model.getDefaultColumnWidth())
+                                columnsHeader.forceLayout()
+                                tableView.forceLayout()
+                                }
+                                if(m_model.tooSmallTable()){
+                                    console.log("Yeehaw!")
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
         ScrollIndicator.horizontal: ScrollIndicator { }
         ScrollIndicator.vertical: ScrollIndicator { }
 
-        /*property int lastColumnSize
-        Component.onCompleted: {
-            lastColumnSize = settings.maxScreenWidth - m_model.getColumnWidth(0)
-            m_model.setColumnWidth(tableView.columns-1, item.width - m_model.getColumnWidth(0))
-            repeater.itemAt(tableView.columns-1).width = lastColumnSize
-            tableView.forceLayout()
-            console.log(item.width)
-        }*/
     }
 }
 

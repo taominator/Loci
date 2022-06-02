@@ -7,6 +7,7 @@
 //#include <cardmodel.h>
 #include <dbmanager.h>
 #include <QDebug>
+#include <QScreen>
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +20,14 @@ int main(int argc, char *argv[])
 
     readFiles(deck1);*/
 
+
     dbmanager DBManager;
+
+    int screenSize = app.primaryScreen()->size().width();
+    // 5.0 to prevent truncation of integer
+    int tableSize = screenSize*(4/5.0) - (DBManager.m_model.m_borderWidth*2);
+
+    DBManager.m_model.setTableWidth(tableSize);
     DBManager.setModel("test2");
 
 
@@ -51,7 +59,9 @@ int main(int argc, char *argv[])
     qInfo() << "---------";
     qInfo() << DBManager.m_model.m_roleNames;
     qInfo() << "---------";
-    qInfo() << DBManager.m_model.m_columnWidths;*/
+    qInfo() << DBManager.m_model.m_columnWidths;
+    qInfo() << DBManager.m_model.m_columnWidths;
+    qInfo() << app.primaryScreen()->size().width();*/
 
     return app.exec();
 }

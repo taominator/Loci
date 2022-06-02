@@ -6,10 +6,14 @@
 class settings : public QObject
 {
     Q_OBJECT
+    //Q_PROPERTY(int maxWindowWidth Read getMaxWindowWidth WRITE setMaxWindowWidth NOTIFY maxWindowWidthChanged)
 public:
     explicit settings(QObject *parent = nullptr);
 
 signals:
+    void maxWindowWidthChanged();
+private:
+
 
 };
 

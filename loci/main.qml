@@ -19,16 +19,18 @@ Window {
     Component.onCompleted: {
         maxWidth = mainWindow.width
         maxHeight = mainWindow.height
+        //m_model.setTableWidth(maxWidth * (4/5))
         mainWindow.visibility = "Windowed"
         mainWindow.width = 640
         mainWindow.height = 480
         x = screen.width / 2 - width / 2
         y = screen.height / 2 - height / 2
-        /*console.log(width)
-        console.log(height)
+        //console.log(width)
+        //console.log(height)
         console.log(maxWidth)
-        console.log(maxHeight)
-        console.log(screen.width)
-        console.log(screen.height)*/
+        //console.log(maxHeight)
+        //console.log(screen.width)
+        //console.log(screen.height)
+        console.log(m_model.m_tableWidth)
     }
 }
