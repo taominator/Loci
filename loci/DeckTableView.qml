@@ -29,8 +29,8 @@ Item {
         topMargin: columnsHeader.implicitHeight
 
 
-        ScrollBar.horizontal: ScrollBar{}
-        ScrollBar.vertical: ScrollBar{}
+        ScrollBar.horizontal: ScrollBar{policy: ScrollBar.AlwaysOn}
+        ScrollBar.vertical: ScrollBar{policy: ScrollBar.AlwaysOn}
         clip: true
 
         model: m_model
@@ -79,13 +79,14 @@ Item {
                     }
 
                     MouseArea {
-                        id: mouseAreaLeft
 
                         property int oldMouseX
 
+                        cursorShape: Qt.SplitHCursor
+
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        width: 15
+                        width: 5
                         height: 35
                         hoverEnabled: true
 
@@ -119,23 +120,30 @@ Item {
                                     m_model.setColumnWidth(modelData, parent.width + change)
                                     columnsHeader.forceLayout()
                                     tableView.forceLayout()
+                                    m_model.updateSumColumnWidths()
                                 }
                                 if(change < 0){
-                                    if(parent.width > 100){
+                                    if(parent.width > m_model.getDefaultColumnWidth()){
                                     parent.width = parent.width + change
                                     m_model.setColumnWidth(modelData, parent.width + change)
                                     columnsHeader.forceLayout()
                                     tableView.forceLayout()
+                                    m_model.updateSumColumnWidths()
                                     }
                                 }
-                                if(parent.width < 100){
+                                if(parent.width < m_model.getDefaultColumnWidth()){
+                                oldWidth = parent.width
                                 parent.width = m_model.getDefaultColumnWidth()
                                 m_model.setColumnWidth(modelData, m_model.getDefaultColumnWidth())
                                 columnsHeader.forceLayout()
                                 tableView.forceLayout()
+                                m_model.updateSumColumnWidths()
                                 }
                                 if(m_model.tooSmallTable()){
-                                    console.log("Yeehaw!")
+                                    m_model.rectifyLastColumnWidth()
+                                    repeater.itemAt(2).width = m_model.lastColumnWidth()
+                                    columnsHeader.forceLayout()
+                                    tableView.forceLayout()
                                 }
                             }
                         }

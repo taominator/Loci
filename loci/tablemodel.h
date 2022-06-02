@@ -28,14 +28,13 @@ public:
     Q_INVOKABLE void setColumnWidth(int n, int new_width);    
     Q_INVOKABLE int getDefaultColumnWidth();
     Q_INVOKABLE void setTableWidth(int width);
-    int getBorderWidth();
-    Q_INVOKABLE void updateSumColumnWidths(int num);
-    Q_INVOKABLE void correctLastColumnWidth();
+    Q_INVOKABLE int getBorderWidth();
+    Q_INVOKABLE void updateSumColumnWidths();
+    Q_INVOKABLE void rectifyLastColumnWidth();
     Q_INVOKABLE int lastColumnWidth();
     Q_INVOKABLE bool tooSmallTable();
 
 
-    Q_INVOKABLE void print();
 public:
     void generateRoleNames();
     QHash<int, QByteArray> m_roleNames;

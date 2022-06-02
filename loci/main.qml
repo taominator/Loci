@@ -3,8 +3,8 @@ import "."
 
 Window {
     id: mainWindow
-    property int maxWidth
-    property int maxHeight
+    //property int maxWidth
+    //property int maxHeight
     visibility: "Maximized"
     visible: true
     title: qsTr("Loci")
@@ -16,10 +16,10 @@ Window {
         visible: true
     }
 
-    Component.onCompleted: {
+    //For saving previous user window size
+    /*Component.onCompleted: {
         maxWidth = mainWindow.width
         maxHeight = mainWindow.height
-        //m_model.setTableWidth(maxWidth * (4/5))
         mainWindow.visibility = "Windowed"
         mainWindow.width = 640
         mainWindow.height = 480
@@ -32,5 +32,5 @@ Window {
         //console.log(screen.width)
         //console.log(screen.height)
         console.log(m_model.m_tableWidth)
-    }
+    }*/
 }

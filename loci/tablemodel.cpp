@@ -61,13 +61,7 @@ void tablemodel::generateColumnWidths()
         m_columnWidths[i] = m_defaultColumnWidth;
     }
     m_sumColumnWidths = record().count() * m_defaultColumnWidth;
-    correctLastColumnWidth();
-    //m_tableWidth = 1000;
-    /*if(m_tableWidth > m_sumColumnWidths){
-        m_columnWidths.insert(record().count()-1 , m_tableWidth - (m_sumColumnWidths - m_defaultColumnWidth));
-        m_sumColumnWidths += m_columnWidths.value(record().count()-1) - m_defaultColumnWidth;
-        qInfo() << m_sumColumnWidths;
-    }*/
+    rectifyLastColumnWidth();
 }
 
 int tablemodel::getColumnWidth(int n){
@@ -94,18 +88,21 @@ int tablemodel::getBorderWidth()
     return m_borderWidth;
 }
 
-void tablemodel::updateSumColumnWidths(int num)
+void tablemodel::updateSumColumnWidths()
 {
-    m_sumColumnWidths += num;
+    m_sumColumnWidths = 0;
+    for(int i = 0; i < record().count(); i ++){
+        m_sumColumnWidths += m_columnWidths.value(i);
+    }
+
 }
 
-void tablemodel::correctLastColumnWidth()
+void tablemodel::rectifyLastColumnWidth()
 {
     if(m_tableWidth > m_sumColumnWidths){
         int previousLastColumnWidth = m_columnWidths.value(record().count()-1);
         m_columnWidths.insert(record().count()-1 , m_tableWidth - (m_sumColumnWidths - previousLastColumnWidth));
         m_sumColumnWidths += m_columnWidths.value(record().count()-1) - previousLastColumnWidth;
-        qInfo() << m_sumColumnWidths;
     }
 }
 
@@ -123,8 +120,3 @@ bool tablemodel::tooSmallTable()
     return false;
 }
 
-void tablemodel::print()
-{
-    qInfo() << "sum width: " << m_sumColumnWidths;
-    qInfo() << "table width: " << m_tableWidth;
-}
