@@ -18,6 +18,7 @@ Item {
         id: tableView
 
         boundsBehavior: Flickable.StopAtBounds
+        //interactive: false
 
         //columnWidthProvider: function (column) { return 100; }
         columnWidthProvider: function (column) { return m_model.getColumnWidth(column) }
@@ -78,15 +79,16 @@ Item {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    MouseArea {
 
+                    property int mouseAreaWidth: 5
+                    MouseArea {
                         property int oldMouseX
 
                         cursorShape: Qt.SplitHCursor
 
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        width: 5
+                        width: mouseAreaWidth
                         height: 35
                         hoverEnabled: true
 
@@ -124,30 +126,37 @@ Item {
                                 }
                                 if(change < 0){
                                     if(parent.width > m_model.getDefaultColumnWidth()){
-                                    parent.width = parent.width + change
-                                    m_model.setColumnWidth(modelData, parent.width + change)
-                                    columnsHeader.forceLayout()
-                                    tableView.forceLayout()
-                                    m_model.updateSumColumnWidths()
+                                        parent.width = parent.width + change
+                                        m_model.setColumnWidth(modelData, parent.width + change)
+                                        columnsHeader.forceLayout()
+                                        tableView.forceLayout()
+                                        m_model.updateSumColumnWidths()
                                     }
                                 }
                                 if(parent.width < m_model.getDefaultColumnWidth()){
-                                oldWidth = parent.width
-                                parent.width = m_model.getDefaultColumnWidth()
-                                m_model.setColumnWidth(modelData, m_model.getDefaultColumnWidth())
-                                columnsHeader.forceLayout()
-                                tableView.forceLayout()
-                                m_model.updateSumColumnWidths()
+                                    oldWidth = parent.width
+                                    parent.width = m_model.getDefaultColumnWidth()
+                                    m_model.setColumnWidth(modelData, m_model.getDefaultColumnWidth())
+                                    columnsHeader.forceLayout()
+                                    tableView.forceLayout()
+                                    m_model.updateSumColumnWidths()
                                 }
                                 if(m_model.tooSmallTable()){
                                     m_model.rectifyLastColumnWidth()
-                                    repeater.itemAt(2).width = m_model.lastColumnWidth()
+                                    repeater.itemAt(tableView.columns-1).width = m_model.lastColumnWidth()
                                     columnsHeader.forceLayout()
                                     tableView.forceLayout()
                                 }
+                                parent.width = m_model.getColumnWidth(modelData)
+                                columnsHeader.forceLayout()
+                                tableView.forceLayout()
                             }
                         }
                     }
+                }
+                //scrollbar hides mousearea
+                Component.onCompleted: {
+                    repeater.itemAt(tableView.columns-1).mouseAreaWidth = 25
                 }
             }
         }
