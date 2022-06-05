@@ -27,7 +27,7 @@ Item {
         Rectangle {
             id: tableRect
             height: parent.height * (1/2)
-            color: "#CBF7F7"
+            color: "#EAF9F9"
             anchors {
                 top: parent.top
                 right: parent.right

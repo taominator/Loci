@@ -16,6 +16,7 @@ Window {
         visible: true
     }
 
+
     //For saving previous user window size
     /*Component.onCompleted: {
         maxWidth = mainWindow.width

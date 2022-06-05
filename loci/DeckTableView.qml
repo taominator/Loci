@@ -6,6 +6,16 @@ Item {
     id: item
     anchors.fill: parent
 
+    focus: true
+    Keys.onPressed: {
+        if ((event.key === Qt.Key_A) && (event.modifiers & Qt.ControlModifier)){
+            m_model.ctrlAll(tableView.rows);
+            tableView.model = ""
+            tableView.model = m_model
+            console.log("Key pressed!")
+        }
+    }
+
     // Uncomment this, if you want to call query from qml
     // If you uncomment this, remember to comment out the followin line in main.cpp
     // mysqlModel.callSql("SELECT * FROM users");
@@ -36,27 +46,52 @@ Item {
 
         model: m_model
 
-        // Table Body
+        //Keys.onPressed: {
+        //    if ((event.key === Qt.Key_A) && (event.modifiers & Qt.ControlModifier)){
+        //        m_model.ctrlAll(tableView.rows);
+        //        tableView.model = ""
+        //        tableView.model = m_model
+        //        console.log("Key pressed!")
+        //    }
+        //}
 
-        property int selectedRow: 1
-        delegate: ItemDelegate {
+
+        delegate: Rectangle {
             clip: true
+            color: m_model.containsRow(row) ? "#7DFCFC" : "#CBF7F7"
+            border.color: "gray"
 
-            highlighted: row === tableView.selectedRow
-            onClicked: {
-                tableView.selectedRow = row
-            }
-            property int delegateRow
-            Component.onCompleted: {
-                delegateRow = row
-            }
-
-            Rectangle {
+            MouseArea{
                 anchors.fill: parent
-                color: parent.delegateRow%2 === 0 ? "#B8F4F4" : "#CEF1F1"
-                border.color: "gray"
-                visible: parent.delegateRow === tableView.selectedRow ? false : true
+                onClicked: (mouse)=> {
+                               parent.focus = true
+                               if ((mouse.button === Qt.LeftButton) && (mouse.modifiers & Qt.ControlModifier)){
+                                   m_model.ctrlClick(row)
+                               }
+                               else if ((mouse.button === Qt.LeftButton) && (mouse.modifiers & Qt.ShiftModifier)){
+                                   m_model.shiftClick(row)
+                               }
+                               else if (mouse.button === Qt.LeftButton){
+                                   m_model.leftClick(row)
+                               }
+
+
+                               console.log(m_model.containsRow(row))
+                               tableView.model = ""
+                               tableView.model = m_model
+                               console.log("Clicked!")
+                           }
             }
+
+            Keys.onPressed: {
+                if ((event.key === Qt.Key_A) && (event.modifiers & Qt.ControlModifier)){
+                    m_model.ctrlAll(tableView.rows);
+                    tableView.model = ""
+                    tableView.model = m_model
+                }
+                console.log("Key pressed!")
+            }
+
 
             Text {
                 text: model.display // This is set in mysqlmodel.cpp roleNames()
@@ -117,21 +152,6 @@ Item {
                             oldMouseX = mouseX
                             //console.log("clicked")
                         }
-
-                        /*onPositionChanged: {
-                            if(pressed){
-                                if(m_model.getColumnWidth(modelData) > 100) {
-                                change = (mouseX - oldMouseX)
-                                m_model.setColumnWidth(modelData, parent.width + change)
-                                //m_model.correctLastColumnWidth
-                                parent.width = parent.width + change
-                                columnsHeader.forceLayout()
-                                tableView.forceLayout()
-                                m_model.updateSumColumnWidths(change)
-                                m_model.print()
-                                }
-                            }
-                        }*/
 
                         onPositionChanged: {
                             if (pressed) {

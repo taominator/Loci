@@ -35,6 +35,8 @@ public:
     Q_INVOKABLE int lastColumnWidth();
     Q_INVOKABLE bool tooSmallTable();
 
+    Q_INVOKABLE bool containsRow(int index);
+    Q_INVOKABLE QString colorProvider(int index);
     Q_INVOKABLE void leftClick(int index);
     Q_INVOKABLE void ctrlClick(int index);
     Q_INVOKABLE void shiftClick(int index);

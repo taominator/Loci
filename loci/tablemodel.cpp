@@ -120,15 +120,35 @@ bool tablemodel::tooSmallTable()
     return false;
 }
 
+bool tablemodel::containsRow(int index)
+{
+    return m_selectedRows.contains(index);
+}
+
+QString tablemodel::colorProvider(int index)
+{
+    if(m_selectedRows.contains(index))
+    {
+        return "blue";
+    }
+    return "cyan";
+}
+
 void tablemodel::leftClick(int index)
 {
     m_selectedRows.clear();
     m_selectedRows.append(index);
+    qInfo() << m_selectedRows;
 }
 
 void tablemodel::ctrlClick(int index)
 {
-    m_selectedRows.append(index);
+    if(m_selectedRows.contains(index)){
+        m_selectedRows.removeOne(index);
+    }
+    else{
+        m_selectedRows.append(index);
+    }
 }
 
 void tablemodel::shiftClick(int index)
@@ -147,7 +167,7 @@ void tablemodel::shiftClick(int index)
     }
 
     if (index < lastIndex){
-        for (int i = index; i > lastIndex; i--)
+        for (int i = index; i < lastIndex; i++)
         {
             m_selectedRows.append(i);
         }
