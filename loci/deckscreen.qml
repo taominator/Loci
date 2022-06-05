@@ -4,9 +4,20 @@ Item {
     anchors.fill: parent
 
     Rectangle {
+        id: deckRect
+        width: parent.width * (1/5)
+        color: "gray"
+        anchors {
+            top: parent.top
+            left:parent.left
+            bottom: parent.bottom
+        }
+    }
+
+    Rectangle {
         id: rightRect
         width: parent.width * (4/5)
-        color: "green"
+        color: "#E2F7F7"
         anchors {
             top: parent.top
             right:parent.right
@@ -14,9 +25,9 @@ Item {
         }
 
         Rectangle {
-            id: redRect
+            id: tableRect
             height: parent.height * (1/2)
-            color: "red"
+            color: "#CBF7F7"
             anchors {
                 top: parent.top
                 right: parent.right

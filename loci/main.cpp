@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("deck", deck1);
     engine.rootContext()->setContextProperty("cardmodel", cardModel);*/
+    engine.rootContext()->setContextProperty("dbmanager", &DBManager);
     engine.rootContext()->setContextProperty("m_model", &DBManager.m_model);
 
     engine.load(url);

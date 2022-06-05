@@ -17,11 +17,12 @@ class tablemodel : public QSqlQueryModel
 public:
     explicit tablemodel(QObject *parent = nullptr);
 
+    //Overwritten tableView functions
     void setQuery(QSqlQuery *query);
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
-
     Q_INVOKABLE void callSql(QString queryString);
+
 
     void generateColumnWidths();
     Q_INVOKABLE int getColumnWidth(int n);
@@ -34,6 +35,10 @@ public:
     Q_INVOKABLE int lastColumnWidth();
     Q_INVOKABLE bool tooSmallTable();
 
+    Q_INVOKABLE void leftClick(int index);
+    Q_INVOKABLE void ctrlClick(int index);
+    Q_INVOKABLE void shiftClick(int index);
+    Q_INVOKABLE void ctrlAll(int num_rows);
 
 public:
     void generateRoleNames();
@@ -44,6 +49,8 @@ public:
     int m_borderWidth = 20;
     int m_tableWidth;
     int m_sumColumnWidths;
+
+    QList<int> m_selectedRows;
 
 signals:
 

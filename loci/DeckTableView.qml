@@ -38,17 +38,35 @@ Item {
 
         // Table Body
 
-        delegate: Rectangle {
-            border.color: "gray"
+        property int selectedRow: 1
+        delegate: ItemDelegate {
             clip: true
+
+            highlighted: row === tableView.selectedRow
+            onClicked: {
+                tableView.selectedRow = row
+            }
+            property int delegateRow
+            Component.onCompleted: {
+                delegateRow = row
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                color: parent.delegateRow%2 === 0 ? "#B8F4F4" : "#CEF1F1"
+                border.color: "gray"
+                visible: parent.delegateRow === tableView.selectedRow ? false : true
+            }
+
             Text {
-                text: display // This is set in mysqlmodel.cpp roleNames()
+                text: model.display // This is set in mysqlmodel.cpp roleNames()
                 anchors.fill: parent
                 anchors.margins: 10
                 elide: Text.ElideRight
                 color: 'black'
                 font.pixelSize: 15
                 verticalAlignment: Text.AlignVCenter
+
             }
         }
 
@@ -68,7 +86,7 @@ Item {
                     width: tableView.columnWidthProvider(modelData)
                     //width: m_model.getColumnWidth(modelData)
                     height: 35
-                    color: "#ccc"
+                    color: "#A8BEBE"
                     border.color: "gray"
                     Label {
                         anchors.fill: parent
@@ -82,6 +100,7 @@ Item {
 
                     property int mouseAreaWidth: 5
                     MouseArea {
+                        id:rightArea
                         property int oldMouseX
 
                         cursorShape: Qt.SplitHCursor
@@ -157,12 +176,13 @@ Item {
                 //scrollbar hides mousearea
                 Component.onCompleted: {
                     repeater.itemAt(tableView.columns-1).mouseAreaWidth = 25
+                    console.log(tableView.rowCount)
                 }
             }
         }
         ScrollIndicator.horizontal: ScrollIndicator { }
         ScrollIndicator.vertical: ScrollIndicator { }
-
     }
+
 }
 

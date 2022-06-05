@@ -1,4 +1,4 @@
-QT += quick sql
+QT += quick sql quickcontrols2
 
 SOURCES += \
         appfunctions.cpp \

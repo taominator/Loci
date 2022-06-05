@@ -120,3 +120,46 @@ bool tablemodel::tooSmallTable()
     return false;
 }
 
+void tablemodel::leftClick(int index)
+{
+    m_selectedRows.clear();
+    m_selectedRows.append(index);
+}
+
+void tablemodel::ctrlClick(int index)
+{
+    m_selectedRows.append(index);
+}
+
+void tablemodel::shiftClick(int index)
+{
+    if(m_selectedRows.isEmpty())
+    {
+        return;
+    }
+    int lastIndex = m_selectedRows.last();
+
+    if (index > lastIndex){
+        for (int i = lastIndex + 1; i <= index; i++)
+        {
+            m_selectedRows.append(i);
+        }
+    }
+
+    if (index < lastIndex){
+        for (int i = index; i > lastIndex; i--)
+        {
+            m_selectedRows.append(i);
+        }
+    }
+}
+
+void tablemodel::ctrlAll(int num_rows)
+{
+    m_selectedRows.clear();
+    for (int i = 0; i < num_rows; i++)
+    {
+        m_selectedRows.append(i);
+    }
+}
+
