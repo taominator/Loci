@@ -28,7 +28,7 @@ Item {
         id: tableView
 
         boundsBehavior: Flickable.StopAtBounds
-        //interactive: false
+        interactive: false
 
         //columnWidthProvider: function (column) { return 100; }
         columnWidthProvider: function (column) { return m_model.getColumnWidth(column) }
@@ -40,7 +40,10 @@ Item {
         topMargin: columnsHeader.implicitHeight
 
 
-        ScrollBar.horizontal: ScrollBar{policy: ScrollBar.AlwaysOn}
+        ScrollBar.horizontal: ScrollBar{
+            id:horizontalBar
+            policy: ScrollBar.AlwaysOn
+        }
         ScrollBar.vertical: ScrollBar{policy: ScrollBar.AlwaysOn}
         clip: true
 
@@ -190,6 +193,9 @@ Item {
                                 columnsHeader.forceLayout()
                                 tableView.forceLayout()
                             }
+                        }
+                        onReleased: {
+                            horizontalBar.increase()
                         }
                     }
                 }
