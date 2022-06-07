@@ -24,7 +24,7 @@ dbmanager::dbmanager(QObject *parent)
         deck1.m_table = table;
         m_decklist.append(deck1);
     }
-
+    m_deckListModel.setStringList(m_tables);
 }
 
 void dbmanager::setModel(QString tablename)

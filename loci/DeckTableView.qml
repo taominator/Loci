@@ -195,7 +195,7 @@ Item {
                             }
                         }
                         onReleased: {
-                            horizontalBar.increase()
+                            horizontalBar.decrease()
                         }
                     }
                 }

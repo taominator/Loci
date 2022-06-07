@@ -7,6 +7,7 @@
 #include <QtSql/QSqlQueryModel>
 #include <QSqlField>
 #include <tablemodel.h>
+#include <QStringListModel>
 
 struct deck
 {
@@ -29,6 +30,7 @@ public:
     QSqlDatabase m_db;
     tablemodel m_model;
     QStringList m_tables;
+    QStringListModel m_deckListModel;
     QList<deck> m_decklist;
 };
 
