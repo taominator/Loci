@@ -195,19 +195,21 @@ Item {
                             }
                         }
                         onReleased: {
-                            horizontalBar.decrease()
+                            horizontalBar.increase()
                         }
                     }
                 }
                 //scrollbar hides mousearea
                 Component.onCompleted: {
                     repeater.itemAt(tableView.columns-1).mouseAreaWidth = 25
-                    console.log(tableView.rowCount)
                 }
             }
         }
         ScrollIndicator.horizontal: ScrollIndicator { }
         ScrollIndicator.vertical: ScrollIndicator { }
+        Component.onCompleted: {
+            tableView.forceLayout()
+        }
     }
 
 }

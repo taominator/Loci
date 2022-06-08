@@ -14,6 +14,51 @@ Item {
             bottom: parent.bottom
         }
 
+        //--------------------------------------------------------------------------------
+
+        Rectangle {
+            id: drag_area
+            width: m_model.getBorderWidth()
+            color: "blue"
+            z: 1
+            anchors {
+                top: parent.top
+                right: parent.right
+                bottom: parent.bottom
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.SplitHCursor
+                hoverEnabled: true
+                property int oldMouseX
+
+                onPressed: {
+                    oldMouseX = mouseX
+                }
+
+                onPositionChanged: {
+                    if (pressed) {
+                            leftRect.width = leftRect.width + (mouseX - oldMouseX)
+                            rightRect.width = rightRect.width - (mouseX - oldMouseX)
+
+                        if(leftRect.width < m_model.getBorderWidth()*3)
+                        {
+                            leftRect.width = m_model.getBorderWidth()*3
+                            rightRect.width = mainWindow.maxWidth - m_model.getBorderWidth()*3
+                        }
+                        else if (rightRect.width < m_model.getBorderWidth()*3)
+                        {
+                            rightRect.width = m_model.getBorderWidth()*3
+                            leftRect.width = mainWindow.maxWidth - m_model.getBorderWidth()*3
+                        }
+                    }
+                }
+            }
+        }
+
+        //--------------------------------------------------------------------------------
+
         Rectangle {
             id: due_today
             color: today_mouse_area.containsMouse? "#A7C2D9" : "#E6F4F4"
@@ -158,6 +203,7 @@ Item {
                 left: parent.left
                 right: parent.right
             }
+            property int selectedIndex: -2
 
             Rectangle {
                 id: minimize_decklist
@@ -180,7 +226,7 @@ Item {
             Rectangle {
                 id: deckbar
                 height: m_model.getBorderWidth() * 1.5
-                color: deckbar_mouse_area.containsMouse? "#A7C2D9" : "#E6F4F4"
+                color: -1 === decklist.selectedIndex ? "#91B9DA" : (deckbar_mouse_area.containsMouse? "#A7C2D9" : "#E6F4F4")
                 anchors{
                     top: parent.top
                     left: parent.left
@@ -202,6 +248,9 @@ Item {
                     anchors.fill: parent
                     hoverEnabled: true
 
+                    onClicked: {
+                        decklist.selectedIndex = -1
+                    }
                 }
             }
 
@@ -220,6 +269,7 @@ Item {
                 }
 
                 ListView {
+                    id: deck_listview
                     anchors.fill: parent
                     clip: true
                     boundsBehavior: Flickable.StopAtBounds
@@ -227,7 +277,7 @@ Item {
                     delegate: Rectangle {
                         height: m_model.getBorderWidth() * 1.5
                         width: deckbar.width
-                        color: deck_mouse_area.containsMouse? "#A7C2D9" : "#E6F4F4"
+                        color: index === decklist.selectedIndex ? "#91B9DA" : (deck_mouse_area.containsMouse? "#A7C2D9" : "#E6F4F4")
                         Text {
                             anchors.fill: parent
                             font.pixelSize: m_model.getBorderWidth() * 0.8
@@ -240,6 +290,10 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
 
+                            onClicked: {
+                                decklist.selectedIndex = index
+                                m_model.callSql("SELECT * FROM " + display)
+                            }
                         }
                     }
                 }

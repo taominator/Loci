@@ -57,10 +57,16 @@ void tablemodel::generateRoleNames()
 
 void tablemodel::generateColumnWidths()
 {
-    for(int i = 0; i < record().count(); i ++){
+    int j = 0;
+    while(j < 10)
+    {
+        m_columnWidths[j] = 0;
+        j++;
+    }
+    for(int i = j; i < record().count(); i ++){
         m_columnWidths[i] = m_defaultColumnWidth;
     }
-    m_sumColumnWidths = record().count() * m_defaultColumnWidth;
+    m_sumColumnWidths = (record().count() - 10) * m_defaultColumnWidth;
     rectifyLastColumnWidth();
 }
 
