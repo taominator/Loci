@@ -1,12 +1,13 @@
 #include "dbmanager.h"
 #include <QSqlRecord>
 #include <QtDebug>
+#include <QStandardPaths>
 
 dbmanager::dbmanager(QObject *parent)
     : QObject{parent}
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName("C:/Users/taosif/Desktop/SQLITE Databases/test.db");
+    m_db.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/decks.db");
     m_db.open();
     m_tables = m_db.tables(QSql::Tables);
 

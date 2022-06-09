@@ -1,25 +1,17 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-//#include <filereader.h>
 #include <QQmlContext>
-//#include <appfunctions.h>
-//#include <selectedcard.h>
-//#include <cardmodel.h>
 #include <dbmanager.h>
 #include <QDebug>
 #include <QScreen>
+#include <QStandardPaths>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
-    /*deck* deck1 = new deck;
-    deck1->setParent(&app);
-    cardmodel* cardModel = new cardmodel;
-    cardModel->setParent(&app);
-
-    readFiles(deck1);*/
-
+    app.setOrganizationName("taominator");
+    app.setApplicationName("loci");
+    qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 
     dbmanager DBManager;
 
