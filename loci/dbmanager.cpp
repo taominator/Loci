@@ -6,15 +6,23 @@
 dbmanager::dbmanager(QObject *parent)
     : QObject{parent}
 {
-    m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/decks.db");
-    m_db.open();
-    m_tables = m_db.tables(QSql::Tables);
+    //make first database connection and send db1 to m_model
+    m_db1 = QSqlDatabase::addDatabase("QSQLITE", "db1");
+    m_db1.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/decks.db");
+    m_db1.open();
+    m_model.setDb(m_db1);
+    m_tables = m_db1.tables(QSql::Tables);
+
+    //make second database connection and send db2 to card_model
+    m_db2 = QSqlDatabase::addDatabase("QSQLITE", "db2");
+    m_db2.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/decks.db");
+    m_db2.open();
+    m_card_model.setDb(m_db2);
 
     //populated m_decklist using each table
-    foreach(QString table, m_tables )
+    /*foreach(QString table, m_tables )
     {
-        QSqlRecord field_record = m_db.record(table);
+        QSqlRecord field_record = m_db1.record(table);
         int count = field_record.count();
         deck deck1;
         for(int i = 0; i<count; i++)
@@ -24,11 +32,16 @@ dbmanager::dbmanager(QObject *parent)
         }
         deck1.m_table = table;
         m_decklist.append(deck1);
-    }
+    }*/
     m_deckListModel.setStringList(m_tables);
 }
 
 void dbmanager::setModel(QString tablename)
 {
     m_model.callSql("SELECT * FROM " + tablename);
+}
+
+void dbmanager::pass_cardinfo(int row_index)
+{
+
 }

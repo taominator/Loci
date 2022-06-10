@@ -42,9 +42,14 @@ QHash<int, QByteArray> tablemodel::roleNames() const
 
 void tablemodel::callSql(QString queryString)
 {
-    QSqlQuery qry(queryString);
+    QSqlQuery qry(queryString, db1);
     this->setQuery(&qry);
     generateColumnWidths();
+}
+
+void tablemodel::setDb(QSqlDatabase &db)
+{
+    db1 = db;
 }
 
 void tablemodel::generateRoleNames()

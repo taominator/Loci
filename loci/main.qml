@@ -5,6 +5,8 @@ Window {
     id: mainWindow
     property int maxWidth
     property int maxHeight
+    minimumWidth: 300
+    minimumHeight: 300
     visibility: "Maximized"
     visible: true
     title: qsTr("Loci")

@@ -1,12 +1,14 @@
 QT += quick sql quickcontrols2
 
 SOURCES += \
+        card_model.cpp \
         dbmanager.cpp \
         deck.cpp \
         main.cpp\
         tablemodel.cpp
 
 HEADERS += \
+    card_model.h \
     dbmanager.h \
     deck.h \
     tablemodel.h

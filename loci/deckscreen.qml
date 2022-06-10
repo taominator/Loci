@@ -341,11 +341,6 @@ Item {
 
                 DeckTableView {
                 }
-
-                Component.onCompleted: {
-                    console.log(anchors.leftMargin)
-                    console.log(anchors.rightMargin)
-                }
             }
         }
         Rectangle {

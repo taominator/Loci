@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     app.setOrganizationName("taominator");
     app.setApplicationName("loci");
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 
     dbmanager DBManager;
 
@@ -22,6 +21,7 @@ int main(int argc, char *argv[])
     DBManager.m_model.setTableWidth(tableSize);
     DBManager.setModel("test2");
 
+    DBManager.m_card_model.test();
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/loci/main.qml"_qs);
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
 
     /*qInfo() << DBManager.m_model.record();
-    qInfo() << DBManager.m_db.isOpen();
+    qInfo() << DBManager.m_db1.isOpen();
     qInfo() << DBManager.m_decklist.at(1).m_table;
     qInfo() << "---------";
     qInfo() << DBManager.m_decklist.at(0).m_fields;

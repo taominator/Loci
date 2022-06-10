@@ -24,6 +24,7 @@ public:
     Q_INVOKABLE void callSql(QString queryString);
 
 
+    void setDb(QSqlDatabase &db);
     void generateColumnWidths();
     Q_INVOKABLE int getColumnWidth(int n);
     Q_INVOKABLE void setColumnWidth(int n, int new_width);    
@@ -46,6 +47,7 @@ public:
     void generateRoleNames();
     QHash<int, QByteArray> m_roleNames;
 
+    QSqlDatabase db1;
     QHash<int, int> m_columnWidths;
     int m_defaultColumnWidth;
     int m_borderWidth = 20;
