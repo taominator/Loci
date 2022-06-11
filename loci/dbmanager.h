@@ -24,7 +24,7 @@ public:
     explicit dbmanager(QObject *parent = nullptr);
 
     Q_INVOKABLE void setModel(QString tablename);
-    void pass_cardinfo(int row_index);
+    Q_INVOKABLE void set_cardinfo(int row_index);
 
 signals:
 

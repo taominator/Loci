@@ -6,16 +6,6 @@ Item {
     id: item
     anchors.fill: parent
 
-    focus: true
-    Keys.onPressed: {
-        if ((event.key === Qt.Key_A) && (event.modifiers & Qt.ControlModifier)){
-            m_model.ctrlAll(tableView.rows);
-            tableView.model = ""
-            tableView.model = m_model
-            console.log("Key pressed!")
-        }
-    }
-
     // Uncomment this, if you want to call query from qml
     // If you uncomment this, remember to comment out the followin line in main.cpp
     // mysqlModel.callSql("SELECT * FROM users");
@@ -47,17 +37,8 @@ Item {
         ScrollBar.vertical: ScrollBar{policy: ScrollBar.AlwaysOn}
         clip: true
 
+
         model: m_model
-
-        //Keys.onPressed: {
-        //    if ((event.key === Qt.Key_A) && (event.modifiers & Qt.ControlModifier)){
-        //        m_model.ctrlAll(tableView.rows);
-        //        tableView.model = ""
-        //        tableView.model = m_model
-        //        console.log("Key pressed!")
-        //    }
-        //}
-
 
         delegate: Rectangle {
             clip: true
@@ -78,21 +59,11 @@ Item {
                                    m_model.leftClick(row)
                                }
 
-
-                               console.log(m_model.containsRow(row))
                                tableView.model = ""
                                tableView.model = m_model
-                               console.log("Clicked!")
-                           }
-            }
 
-            Keys.onPressed: {
-                if ((event.key === Qt.Key_A) && (event.modifiers & Qt.ControlModifier)){
-                    m_model.ctrlAll(tableView.rows);
-                    tableView.model = ""
-                    tableView.model = m_model
-                }
-                console.log("Key pressed!")
+                               dbmanager.set_cardinfo(model.row)
+                           }
             }
 
 
@@ -102,7 +73,7 @@ Item {
                 anchors.margins: 10
                 elide: Text.ElideRight
                 color: 'black'
-                font.pixelSize: 15
+                font.pixelSize: m_model.getBorderWidth() * (15/20)
                 verticalAlignment: Text.AlignVCenter
 
             }

@@ -41,7 +41,13 @@ void dbmanager::setModel(QString tablename)
     m_model.callSql("SELECT * FROM " + tablename);
 }
 
-void dbmanager::pass_cardinfo(int row_index)
+void dbmanager::set_cardinfo(int row_index)
 {
+    QSqlQuery query = m_model.query();
+    query.seek(row_index);
 
+    QString deckname = query.value(0).toString();
+    QString card_id = query.value(1).toString();
+
+    m_card_model.set_cardinfo(deckname, card_id);
 }

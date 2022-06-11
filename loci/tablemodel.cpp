@@ -149,7 +149,6 @@ void tablemodel::leftClick(int index)
 {
     m_selectedRows.clear();
     m_selectedRows.append(index);
-    qInfo() << m_selectedRows;
 }
 
 void tablemodel::ctrlClick(int index)

@@ -365,7 +365,8 @@ Item {
                     topMargin: m_model.getBorderWidth() / 2
                     bottomMargin: m_model.getBorderWidth() / 2
                 }
-
+                CardListView{
+                }
             }
         }
     }

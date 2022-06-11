@@ -1,9 +1,49 @@
 #include "card_model.h"
 
 card_model::card_model(QObject *parent)
-    : QObject{parent}
+    : QAbstractListModel{parent}
 {
 
+}
+
+int card_model::rowCount(const QModelIndex &parent) const
+{
+    if(parent.isValid()) //No idea why its not the opposite
+    {
+        return 0;
+    }
+    return m_data.count();
+}
+
+QVariant card_model::data(const QModelIndex &index, int role) const
+{
+    if(!index.isValid())
+    {
+        return QVariant();
+    }
+
+    const Data &data = m_data.at(index.row());
+    if(role == FieldRole)
+    {
+        return data.field;
+    }
+    else if(role == ContentRole)
+    {
+        return data.content;
+    }
+    else
+    {
+        return QVariant();
+    }
+}
+
+QHash<int, QByteArray> card_model::roleNames() const
+{
+    static QHash<int, QByteArray> mapping{
+        {FieldRole, "field"},
+        {ContentRole, "content"}
+    };
+    return mapping;
 }
 
 void card_model::setDb(QSqlDatabase &db)
@@ -11,16 +51,19 @@ void card_model::setDb(QSqlDatabase &db)
     db2 = db;
 }
 
-void card_model::set_cardinfo(QStringList cardinfo_list)
+void card_model::set_cardinfo(QString deckname, QString card_id)
 {
-    deckname = cardinfo_list.value(0);
-    card_id = cardinfo_list.value(1);
+    fields.clear();
+    contents.clear();
+    m_data.clear();
+    m_deckname = deckname;
+    m_card_id = card_id;
 
     QSqlQuery query(db2);
-    callSql(&query, "SELECT * FROM " + deckname + " WHERE id = " + card_id);
-    qInfo() << query.first();
+    callSql(&query, "SELECT * FROM " + m_deckname + " WHERE id = " + m_card_id);
+    query.first();
 
-    QSqlRecord record = db2.record(deckname);
+    QSqlRecord record = db2.record(m_deckname);
     int num_columns = record.count();
     for(int i = 0; i < num_columns; i++)
     {
@@ -29,6 +72,20 @@ void card_model::set_cardinfo(QStringList cardinfo_list)
 
         contents.append(query.value(i).toString());
     }
+
+    for(int i = 0; i < fields.count(); i++)
+    {
+        Data data(fields.at(i), contents.at(i));
+        m_data.append(data);
+    }
+
+    emit dataChanged(index(0), index(12));
+
+    //for(int i = 0; i < fields.count(); i++)
+    //{
+    //    qInfo() << m_data.at(i).field << "   " << m_data.at(i).content;
+    //}
+    //qInfo() << "-------------------------------\n";
 }
 
 void card_model::callSql(QSqlQuery *query, QString queryString)
@@ -39,11 +96,11 @@ void card_model::callSql(QSqlQuery *query, QString queryString)
 
 void card_model::test()
 {
-    deckname = "test2";
-    card_id = "1";
-    QStringList test_list {deckname, card_id};
-    set_cardinfo(test_list);
-    qInfo() << fields;
-    qInfo() << "-------------";
-    qInfo() << contents;
+    m_deckname = "test2";
+    m_card_id = "2";
+    set_cardinfo(m_deckname, m_card_id);
+    //qInfo() << fields;
+    //qInfo() << "-------------";
+    //qInfo() << contents;
 }
+

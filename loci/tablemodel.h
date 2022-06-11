@@ -26,6 +26,8 @@ public:
 
     void setDb(QSqlDatabase &db);
     void generateColumnWidths();
+
+    //QML functions
     Q_INVOKABLE int getColumnWidth(int n);
     Q_INVOKABLE void setColumnWidth(int n, int new_width);    
     Q_INVOKABLE int getDefaultColumnWidth();
@@ -36,6 +38,7 @@ public:
     Q_INVOKABLE int lastColumnWidth();
     Q_INVOKABLE bool tooSmallTable();
 
+    //mouse event functions for QML
     Q_INVOKABLE bool containsRow(int index);
     Q_INVOKABLE QString colorProvider(int index);
     Q_INVOKABLE void leftClick(int index);
