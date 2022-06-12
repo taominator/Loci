@@ -18,6 +18,7 @@ resources.files = main.qml \
     deckscreen.qml \
     homescreen.qml \
     DeckTableView.qml \
+    DeckTableView2.qml \
     CardListView.qml \
     test.qml
 
@@ -38,6 +39,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     CardListView.qml \
-    DeckTableView.qml
+    DeckTableView.qml \
+    DeckTableView2.qml
 
 

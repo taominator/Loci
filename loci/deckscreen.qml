@@ -81,6 +81,9 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
 
+                onClicked: {
+                    tableLoader.source = "DeckTableView2.qml"
+                }
             }
         }
 
@@ -186,6 +189,14 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
 
+                            onClicked: {
+                                tableLoader.source = "DeckTableView2.qml"
+                                m_model.callSql("SELECT * FROM test LEFT OUTER JOIN test2 ON test.card_state = test2.card_state WHERE test.card_state = \"review\"
+                                                UNION ALL
+                                                SELECT * FROM test2 LEFT OUTER JOIN test ON test.card_state = test2.card_state WHERE test2.card_state = \"review\"")
+                                console.log("SELECT deckname, id, Question, Answer FROM " + dbmanager.getFullJoinString() +
+                                            " WHERE card_state = " + name)
+                            }
                         }
                     }
                 }
@@ -250,6 +261,7 @@ Item {
 
                     onClicked: {
                         decklist.selectedIndex = -1
+                        tableLoader.source = "DeckTableView.qml"
                     }
                 }
             }
@@ -293,6 +305,7 @@ Item {
                             onClicked: {
                                 decklist.selectedIndex = index
                                 m_model.callSql("SELECT * FROM " + display)
+                                tableLoader.source = "DeckTableView.qml"
                             }
                         }
                     }
@@ -339,8 +352,19 @@ Item {
                     bottomMargin: m_model.getBorderWidth() / 2
                 }
 
-                DeckTableView {
-                }
+                Loader {
+                    id: tableLoader
+                    anchors.fill: parent
+                    source: "DeckTableView2.qml"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            card_loader.source = ""
+                            card_loader.source = "CardListView.qml"
+                        }
+                    }
+                  }
             }
         }
         Rectangle {
@@ -365,7 +389,10 @@ Item {
                     topMargin: m_model.getBorderWidth() / 2
                     bottomMargin: m_model.getBorderWidth() / 2
                 }
-                CardListView{
+                Loader{
+                    id: card_loader
+                    anchors.fill: parent
+                    source: "CardListView.qml"
                 }
             }
         }

@@ -31,9 +31,11 @@ public:
     Q_INVOKABLE int getColumnWidth(int n);
     Q_INVOKABLE void setColumnWidth(int n, int new_width);    
     Q_INVOKABLE int getDefaultColumnWidth();
+    Q_INVOKABLE int getTableWidth();
     Q_INVOKABLE void setTableWidth(int width);
     Q_INVOKABLE int getBorderWidth();
     Q_INVOKABLE void updateSumColumnWidths();
+    //to extend last column to the right border of tableview
     Q_INVOKABLE void rectifyLastColumnWidth();
     Q_INVOKABLE int lastColumnWidth();
     Q_INVOKABLE bool tooSmallTable();

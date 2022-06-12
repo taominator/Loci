@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QScreen>
 #include <QStandardPaths>
+#include <QDateTime>
 
 int main(int argc, char *argv[])
 {
@@ -44,6 +45,15 @@ int main(int argc, char *argv[])
 
     engine.load(url);
 
+
+    QString time_format = "yyyy-MM-dd  HH:mm:ss";
+    QDateTime a = QDateTime::currentDateTime();
+    QString as = a.toString(time_format);
+
+    qInfo() << as; // print "2014-07-16  17:47:04"
+
+    QDateTime b = QDateTime::fromString(as,time_format);
+    qInfo() << b;
 
     /*qInfo() << DBManager.m_model.record();
     qInfo() << DBManager.m_db1.isOpen();

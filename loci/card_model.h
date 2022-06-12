@@ -25,6 +25,7 @@ class card_model : public QAbstractListModel
     Q_OBJECT
 public:
     explicit card_model(QObject *parent = nullptr);
+    Q_INVOKABLE void refresh();
 
     //Listmodel overwriten functions
     enum Roles {
@@ -42,6 +43,7 @@ public:
     void test();
 
 signals:
+    void numChanged();
 
 public:
     QSqlDatabase db2;
@@ -53,6 +55,9 @@ public:
 
     //data for listmodel
     QList<Data> m_data;
+
+    //QProperty to notify change in data
+    int m_num;
 };
 
 #endif // CARD_MODEL_H

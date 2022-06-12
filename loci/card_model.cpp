@@ -6,6 +6,12 @@ card_model::card_model(QObject *parent)
 
 }
 
+void card_model::refresh()
+{
+    emit dataChanged(index(0), index(fields.length()-1));
+    emit layoutChanged();
+}
+
 int card_model::rowCount(const QModelIndex &parent) const
 {
     if(parent.isValid()) //No idea why its not the opposite
@@ -73,19 +79,20 @@ void card_model::set_cardinfo(QString deckname, QString card_id)
         contents.append(query.value(i).toString());
     }
 
+
     for(int i = 0; i < fields.count(); i++)
     {
         Data data(fields.at(i), contents.at(i));
         m_data.append(data);
     }
 
-    emit dataChanged(index(0), index(12));
+    for(int i = 0; i < m_data.length(); i++)
+    {
+        qInfo() << m_data.at(i).field;
+        qInfo() << m_data.at(i).content;
+    }
 
-    //for(int i = 0; i < fields.count(); i++)
-    //{
-    //    qInfo() << m_data.at(i).field << "   " << m_data.at(i).content;
-    //}
-    //qInfo() << "-------------------------------\n";
+    refresh();
 }
 
 void card_model::callSql(QSqlQuery *query, QString queryString)
