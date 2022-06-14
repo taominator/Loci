@@ -191,11 +191,7 @@ Item {
 
                             onClicked: {
                                 tableLoader.source = "DeckTableView2.qml"
-                                m_model.callSql("SELECT * FROM test LEFT OUTER JOIN test2 ON test.card_state = test2.card_state WHERE test.card_state = \"review\"
-                                                UNION ALL
-                                                SELECT * FROM test2 LEFT OUTER JOIN test ON test.card_state = test2.card_state WHERE test2.card_state = \"review\"")
-                                console.log("SELECT deckname, id, Question, Answer FROM " + dbmanager.getFullJoinString() +
-                                            " WHERE card_state = " + name)
+                                m_model.callSql(dbmanager.allTableQuery(name))
                             }
                         }
                     }
@@ -261,7 +257,8 @@ Item {
 
                     onClicked: {
                         decklist.selectedIndex = -1
-                        tableLoader.source = "DeckTableView.qml"
+                        tableLoader.source = "DeckTableView2.qml"
+                        m_model.callSql(dbmanager.allTableQuery())
                     }
                 }
             }

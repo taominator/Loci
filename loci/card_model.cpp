@@ -86,11 +86,11 @@ void card_model::set_cardinfo(QString deckname, QString card_id)
         m_data.append(data);
     }
 
-    for(int i = 0; i < m_data.length(); i++)
-    {
-        qInfo() << m_data.at(i).field;
-        qInfo() << m_data.at(i).content;
-    }
+    //for(int i = 0; i < m_data.length(); i++)
+    //{
+    //    //() << m_data.at(i).field;
+    //    qInfo() << m_data.at(i).content;
+    //}
 
     refresh();
 }

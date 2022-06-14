@@ -47,31 +47,27 @@ void dbmanager::set_cardinfo(int row_index)
 //SELECT * FROM test2 LEFT OUTER JOIN test ON test.card_state = test2.card_state WHERE test2.card_state = "review"
 
 
-void dbmanager::createAllView()
+QString dbmanager::allTableQuery(QString state)
 {
-    int num_decks = m_tables.length();
-    QString querystring;
-
-    if(num_decks == 1)
-    {
-        querystring = "CREATE TEMP VIEW allview AS SELECT deckname, id, Question, Answer FROM " + m_tables.at(0);
-    }
-    else
-    {
-
-    }
-    m_model.callSql(querystring);
-}
-
-QString dbmanager::getFullJoinString(QString state)
-{
-    QString querystring = "DROP VIEW allview ";
+    QString querystring = "SELECT deckname, id, Question, Answer FROM " + m_tables.at(0) + " WHERE card_state = \"" + state + "\"";
     int num_tables = m_tables.length();
-    QString first_table = m_tables.at(0);
 
     for(int i = 1; i < num_tables; i++)
     {
-        querystring += " FULL JOIN " + m_tables.at(i) + " ON " + first_table + ".deckname = " + m_tables.at(i) + ".deckname";
+        querystring += " UNION ALL SELECT deckname, id, Question, Answer FROM " + m_tables.at(i) + " WHERE card_state = \"" + state + "\"";
+    }
+
+    return querystring;
+}
+
+QString dbmanager::allTableQuery()
+{
+    QString querystring = "SELECT deckname, id, Question, Answer FROM " + m_tables.at(0);
+    int num_tables = m_tables.length();
+
+    for(int i = 1; i < num_tables; i++)
+    {
+        querystring += " UNION ALL SELECT deckname, id, Question, Answer FROM " + m_tables.at(i);
     }
 
     return querystring;

@@ -24,11 +24,10 @@ public:
     //Extracts deckname and card_id using the given index and calls card_model function to set card_info
     Q_INVOKABLE void set_cardinfo(int row_index);
 
-    //creates SQL VIEW containing all rows from all tables
-    void createAllView();
-
-    //Returns constructed SQL query for all table FULL JOIN on deckname for DeckTableView2
-    Q_INVOKABLE QString getFullJoinString(QString state);
+    //Returns constructed SQL query for all table with columns deckname, id, Questiond and Answer for DeckTableView2
+    Q_INVOKABLE QString allTableQuery(QString state);
+    //with no constraints
+    Q_INVOKABLE QString allTableQuery();
 
 signals:
 
