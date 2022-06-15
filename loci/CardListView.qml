@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick
 
 Item {
     anchors.fill: parent
@@ -7,6 +7,7 @@ Item {
         id: listView
         anchors.fill: parent
         clip: true
+        boundsBehavior: Flickable.StopAtBounds
 
         model: card_model
 
@@ -18,10 +19,8 @@ Item {
             height: m_model.getBorderWidth() * 2
             color: "red"
             clip: true
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            width: listView.width
+
             Text {
                 height: parent.height / 2
                 anchors {
@@ -33,7 +32,7 @@ Item {
             }
 
             property string original_content
-            TextEdit {
+            TextInput {
                 height: parent.height / 2
                 anchors {
                     left: parent.left
@@ -42,19 +41,19 @@ Item {
                 }
                 text: content
 
-                onTextChanged: {
-                    if (original_content === listView.question_content) {
-
+                onEditingFinished: {
+                    if (parent.original_content == listView.question_content) {
+                        dbmanager.updateQuestion(listView.deckname, listView.card_id, field, text)
                     }
-                    else if(original_content === listView.answer_content) {
-
+                    else if(parent.original_content == listView.answer_content) {
+                        dbmanager.updateAnswer(listView.deckname, listView.card_id, field, text)
                     }
                     else {
-
+                        dbmanager.updateFieldContent(listView.deckname, listView.card_id, field, text)
                     }
-
                 }
             }
+
 
             Component.onCompleted: {
                 original_content = content

@@ -95,6 +95,13 @@ void card_model::set_cardinfo(QString deckname, QString card_id)
     refresh();
 }
 
+void card_model::updateDb2(QString querystring)
+{
+    QSqlQuery query(db2);
+    callSql(&query, querystring);
+    set_cardinfo(m_deckname, m_card_id);
+}
+
 void card_model::callSql(QSqlQuery *query, QString queryString)
 {
     query->prepare(queryString);

@@ -42,11 +42,6 @@ void dbmanager::set_cardinfo(int row_index)
     m_card_model.set_cardinfo(deckname, card_id);
 }
 
-//SELECT * FROM test LEFT OUTER JOIN test2 ON test.card_state = test2.card_state WHERE test.card_state = "review"
-//UNION ALL
-//SELECT * FROM test2 LEFT OUTER JOIN test ON test.card_state = test2.card_state WHERE test2.card_state = "review"
-
-
 QString dbmanager::allTableQuery(QString state)
 {
     QString querystring = "SELECT deckname, id, Question, Answer FROM " + m_tables.at(0) + " WHERE card_state = \"" + state + "\"";
@@ -71,4 +66,26 @@ QString dbmanager::allTableQuery()
     }
 
     return querystring;
+}
+
+void dbmanager::updateFieldContent(QString deckname, QString card_id, QString field, QString new_content)
+{
+    QString querystring = "UPDATE " + deckname + " SET " + field + " = \"" + new_content + "\" WHERE id = \"" + card_id + "\"";
+    m_card_model.updateDb2(querystring);
+}
+
+void dbmanager::updateQuestion(QString deckname, QString card_id, QString field, QString new_content)
+{
+    QString querystring = "UPDATE " + deckname + " SET " + field + " = \"" + new_content + "\" WHERE id = \"" + card_id + "\"";
+    m_card_model.updateDb2(querystring);
+    querystring = "UPDATE " + deckname + " SET Question = \"" + new_content + "\" WHERE id = \"" + card_id + "\"";
+    m_card_model.updateDb2(querystring);
+}
+
+void dbmanager::updateAnswer(QString deckname, QString card_id, QString field, QString new_content)
+{
+    QString querystring = "UPDATE " + deckname + " SET " + field + " = \"" + new_content + "\" WHERE id = \"" + card_id + "\"";
+    m_card_model.updateDb2(querystring);
+    querystring = "UPDATE " + deckname + " SET Answer = \"" + new_content + "\" WHERE id = \"" + card_id + "\"";
+    m_card_model.updateDb2(querystring);
 }

@@ -29,6 +29,11 @@ public:
     //with no constraints
     Q_INVOKABLE QString allTableQuery();
 
+    //Update row
+    Q_INVOKABLE void updateFieldContent(QString deckname, QString card_id, QString field, QString new_content);
+    Q_INVOKABLE void updateQuestion(QString deckname, QString card_id, QString field, QString new_content);
+    Q_INVOKABLE void updateAnswer(QString deckname, QString card_id, QString field, QString new_content);
+
 signals:
 
 public:

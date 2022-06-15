@@ -9,6 +9,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QStringList>
+#include <QSharedPointer>
 
 //data struct for QList m_data
 struct Data
@@ -38,6 +39,7 @@ public:
     //database functions
     void setDb(QSqlDatabase &db);
     void set_cardinfo(QString deckname, QString card_id);
+    Q_INVOKABLE void updateDb2(QString querystring);
     Q_INVOKABLE void callSql(QSqlQuery *query, QString queryString);
 
     void test();
@@ -47,6 +49,7 @@ signals:
 
 public:
     QSqlDatabase db2;
+    QSqlQuery* m_query;
 
     QString m_deckname;
     QString m_card_id;
