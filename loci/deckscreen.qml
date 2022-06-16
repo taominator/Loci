@@ -170,7 +170,7 @@ Item {
                         ListElement {name: "Learning"}
                         ListElement {name: "Review"}
                         ListElement {name: "Suspended"}
-                        ListElement {name: "Buried"}
+                        //ListElement {name: "Buried"}
                     }
 
                     delegate: Rectangle {
@@ -323,12 +323,107 @@ Item {
             bottom: parent.bottom
         }
 
+        Rectangle {
+            id: options
+            color: "purple"
+            height: parent.height * (1/20)
+            anchors {
+                right: parent.right
+                left: parent.left
+            }
+
+            Rectangle{
+                id: add
+                color: "orange"
+                width: parent.width / 4
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.left
+                }
+                border.color: "black"
+                Text {
+                    text: "Add"
+                    font.pixelSize: parent. height * (2/3)
+                    anchors.centerIn: parent
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                }
+            }
+
+            Rectangle{
+                id: reset
+                color: "red"
+                width: parent.width / 4
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: add.right
+                }
+                border.color: "black"
+                Text {
+                    text: "Reset"
+                    font.pixelSize: parent. height * (2/3)
+                    anchors.centerIn: parent
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                }
+            }
+
+            Rectangle{
+                id: suspend
+                color: "gray"
+                width: parent.width / 4
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: reset.right
+                }
+                Text {
+                    text: "Suspend"
+                    font.pixelSize: parent. height * (2/3)
+                    anchors.centerIn: parent
+                }
+
+                border.color: "black"
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                }
+            }
+
+            Rectangle{
+                id: unsuspend
+                color: "yellow"
+                width: parent.width / 4
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: suspend.right
+                }
+                border.color: "black"
+                Text {
+                    text: "Unsuspend"
+                    font.pixelSize: parent. height * (2/3)
+                    anchors.centerIn: parent
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                }
+            }
+        }
+
         Rectangle{
             id: upperRightRect
-            height: parent.height * (1/2)
+            height: parent.height * (9.5/20)
             color: "green"
             anchors {
-                top: parent.top
+                top: options.bottom
                 right: parent.right
                 left: parent.left
             }
@@ -366,7 +461,7 @@ Item {
         }
         Rectangle {
             id: lowerRightRect
-            height: parent.height * (1/2)
+            height: parent.height * (9.5/20)
             width: rightRect.width
             color: "yellow"
             anchors {
