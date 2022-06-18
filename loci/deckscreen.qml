@@ -39,8 +39,8 @@ Item {
 
                 onPositionChanged: {
                     if (pressed) {
-                            leftRect.width = leftRect.width + (mouseX - oldMouseX)
-                            rightRect.width = rightRect.width - (mouseX - oldMouseX)
+                        leftRect.width = leftRect.width + (mouseX - oldMouseX)
+                        rightRect.width = rightRect.width - (mouseX - oldMouseX)
 
                         if(leftRect.width < m_model.getBorderWidth()*3)
                         {
@@ -309,7 +309,16 @@ Item {
                 }
             }
         }
+
+        //--------------------------------------------------------------------------------
+
     }
+
+
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
+
 
     Rectangle {
         id: rightRect
@@ -456,7 +465,7 @@ Item {
                             card_loader.source = "CardListView.qml"
                         }
                     }
-                  }
+                }
             }
         }
         Rectangle {

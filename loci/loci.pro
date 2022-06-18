@@ -20,11 +20,12 @@ resources.files = main.qml \
     DeckTableView.qml \
     DeckTableView2.qml \
     CardListView.qml \
-    test.qml
+    test.qml \
+    deckedit.qml
 
 
 resources.prefix = /$${TARGET}
-RESOURCES += resources
+RESOURCES += resources \
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -40,6 +41,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     CardListView.qml \
     DeckTableView.qml \
-    DeckTableView2.qml
+    DeckTableView2.qml \
+    deckedit.qml
 
 

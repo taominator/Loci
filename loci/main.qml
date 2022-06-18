@@ -11,13 +11,23 @@ Window {
     visible: true
     title: qsTr("Loci")
 
+    property alias page: top_bar.page
     Loader {
         id: page_loader
         anchors.fill: parent
-        source : "deckscreen.qml"
+        source : page
         visible: true
     }
 
+    Loader {
+        id: deck_edit
+        anchors.fill: parent
+        source: ""
+    }
+
+    TopBar {
+        id: top_bar
+    }
 
     //For saving previous user window size
     Component.onCompleted: {
