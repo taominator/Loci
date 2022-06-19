@@ -19,12 +19,6 @@ Window {
         visible: true
     }
 
-    Loader {
-        id: deck_edit
-        anchors.fill: parent
-        source: ""
-    }
-
     TopBar {
         id: top_bar
     }

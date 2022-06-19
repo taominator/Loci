@@ -89,3 +89,70 @@ void dbmanager::updateAnswer(QString deckname, QString card_id, QString field, Q
     querystring = "UPDATE " + deckname + " SET Answer = \"" + new_content + "\" WHERE id = \"" + card_id + "\"";
     m_card_model.updateDb2(querystring);
 }
+
+void dbmanager::set_selected_table(QString my_table)
+{
+    m_selected_table = my_table;
+}
+
+QVariant dbmanager::get_next_id(QString my_table)
+{
+    QString querystring = "Select MAX(id) from " + my_table + ";";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+    query.first();
+    int id = query.value(0).toInt() + 1;
+    return id;
+}
+
+void dbmanager::add_card()
+{
+    QString querystring = "INSERT INTO " + m_selected_table + " (deckname, id) VALUES (" + "\'" + m_selected_table + "\'" + ", " + get_next_id(m_selected_table).toString() + ");";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+}
+
+void dbmanager::reload_m_model()
+{
+    setModel(m_selected_table);
+}
+
+void dbmanager::create_table(QString my_table)
+{
+    QString querystring;
+    querystring += "CREATE TABLE IF NOT EXISTS " + my_table +" ( deckname TEXT, ";
+    querystring += "id INTEGER, ";
+    querystring += "Question TEXT DEFAULT 'question_field', ";
+    querystring += "Answer TEXT DEFAULT 'answer_field', ";
+    querystring += "previous_date TEXT, ";
+    querystring += "review_date TEXT, ";
+    querystring += "graduating_interval INTEGER, ";
+    querystring += "ease REAL, ";
+    querystring += "easy_bonus REAL, ";
+    querystring += "interval_modifier REAL, ";
+    querystring += "card_state TEXT );";
+
+    //qInfo() << querystring;
+
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    m_tables = m_db1.tables(QSql::Tables);
+    m_deckListModel.setStringList(m_tables);
+}
+
+void dbmanager::drop_table(QString my_table)
+{
+    QString querystring;
+    querystring += "DROP TABLE IF EXISTS " + my_table + ";";
+
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    m_tables = m_db1.tables(QSql::Tables);
+    m_deckListModel.setStringList(m_tables);
+}

@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
     int tableSize = screenWidth*(4/5.0) - (DBManager.m_model.m_borderWidth*2); //10 for scrollbar width
 
     DBManager.m_model.setTableWidth(tableSize);
-    DBManager.setModel("test2");
 
     DBManager.m_card_model.test();
 

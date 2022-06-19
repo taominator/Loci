@@ -34,6 +34,16 @@ public:
     Q_INVOKABLE void updateQuestion(QString deckname, QString card_id, QString field, QString new_content);
     Q_INVOKABLE void updateAnswer(QString deckname, QString card_id, QString field, QString new_content);
 
+    Q_INVOKABLE void set_selected_table(QString my_table);
+    QVariant get_next_id(QString my_table);
+    Q_INVOKABLE void add_card();
+    //reload m_model
+    Q_INVOKABLE void reload_m_model();
+
+    //Creating and Deleting decks
+    Q_INVOKABLE void create_table(QString my_table);
+    Q_INVOKABLE void drop_table(QString my_table);
+
 signals:
 
 public:
@@ -45,6 +55,8 @@ public:
 
     QStringList m_tables;
     QStringListModel m_deckListModel;
+
+    QString m_selected_table;
 
 };
 

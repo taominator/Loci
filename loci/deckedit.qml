@@ -79,6 +79,7 @@ Item {
                     }
 
                     TextInput {
+                        id: deck_deck_input
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left
@@ -114,6 +115,14 @@ Item {
                         text: "Add Deck"
                         font.pixelSize: parent.height / 3
                     }
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: {
+                            dbmanager.create_table(deck_deck_input.text)
+                        }
+                    }
                 }
 
                 Rectangle {
@@ -129,6 +138,14 @@ Item {
                         anchors.centerIn: parent
                         text: "Delete Deck"
                         font.pixelSize: parent.height / 3
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: {
+                            dbmanager.drop_table(deck_deck_input.text)
+                        }
                     }
                 }
             }
@@ -201,6 +218,7 @@ Item {
                     }
 
                     TextInput {
+                        id: field_field_input
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left
@@ -251,6 +269,7 @@ Item {
                     }
 
                     TextInput {
+                        id: field_deck_input
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left

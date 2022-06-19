@@ -259,6 +259,7 @@ Item {
                         decklist.selectedIndex = -1
                         tableLoader.source = "DeckTableView2.qml"
                         m_model.callSql(dbmanager.allTableQuery())
+                        dbmanager.set_selected_table("")
                     }
                 }
             }
@@ -302,6 +303,7 @@ Item {
                             onClicked: {
                                 decklist.selectedIndex = index
                                 m_model.callSql("SELECT * FROM " + display)
+                                dbmanager.set_selected_table(display)
                                 tableLoader.source = "DeckTableView.qml"
                             }
                         }
@@ -359,6 +361,13 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
+
+                    onClicked: {
+                        dbmanager.add_card()
+                        tableLoader.source = ""
+                        dbmanager.reload_m_model()
+                        tableLoader.source = "DeckTableView.qml"
+                    }
                 }
             }
 
