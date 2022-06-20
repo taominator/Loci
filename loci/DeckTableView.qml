@@ -59,6 +59,10 @@ Item {
                                    m_model.leftClick(row)
                                }
 
+                               m_model.update_ids();
+                               m_model.update_intervals()
+                               m_model.update_card_states()
+
                                tableView.model = ""
                                tableView.model = m_model
 

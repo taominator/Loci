@@ -177,14 +177,20 @@ void tablemodel::shiftClick(int index)
     if (index > lastIndex){
         for (int i = lastIndex + 1; i <= index; i++)
         {
-            m_selectedRows.append(i);
+            if(!m_selectedRows.contains(i))
+            {
+                m_selectedRows.append(i);
+            }
         }
     }
 
     if (index < lastIndex){
         for (int i = index; i < lastIndex; i++)
         {
-            m_selectedRows.append(i);
+            if(!m_selectedRows.contains(i))
+            {
+                m_selectedRows.append(i);
+            }
         }
     }
 }
@@ -196,5 +202,36 @@ void tablemodel::ctrlAll(int num_rows)
     {
         m_selectedRows.append(i);
     }
+}
+
+void tablemodel::update_ids()
+{
+    m_selectedIds.clear();
+    for(int i = 0; i < m_selectedRows.size(); i++)
+    {
+        m_selectedIds.append(this->record(m_selectedRows.at(i)).value(1).toInt());
+    }
+}
+
+void tablemodel::update_intervals()
+{
+    m_intervals.clear();
+    for(int i = 0; i < m_selectedRows.size(); i++)
+    {
+        m_intervals.append(this->record(m_selectedRows.at(i)).value(6).toInt());
+    }
+    emit this->layoutChanged();
+    qInfo() << m_intervals;
+}
+
+void tablemodel::update_card_states()
+{
+    m_card_states.clear();
+    for(int i = 0; i < m_selectedRows.size(); i++)
+    {
+        m_card_states.append(this->record(m_selectedRows.at(i)).value(10).toString());
+    }
+    emit this->layoutChanged();
+    qInfo() << m_card_states;
 }
 

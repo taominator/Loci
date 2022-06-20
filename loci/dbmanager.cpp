@@ -19,9 +19,9 @@ dbmanager::dbmanager(QObject *parent)
     m_db2.open();
     m_card_model.setDb(m_db2);
 
-    QString time_format = "yyyy-MM-dd";
-    QDateTime today = QDateTime::currentDateTime();
-    m_today = today.toString(time_format);
+    m_time_format = "dd-MM-yyyy";
+    m_today = QDateTime::currentDateTime();
+    //m_today = today.toString(time_format);
 
     m_deckListModel.setStringList(m_tables);
 }
@@ -112,6 +112,57 @@ void dbmanager::add_card()
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
+}
+
+void dbmanager::remove_cards()
+{
+    QString querystring;
+    for(int i = 0; i < m_model.m_selectedIds.size(); i++)
+    {
+        QSqlQuery query(m_db1);
+        querystring = "DELETE FROM " + m_selected_table + " WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
+        query.exec(querystring);
+    }
+}
+
+void dbmanager::reset_cards()
+{
+    QString querystring;
+    for(int i = 0; i < m_model.m_selectedIds.size(); i++)
+    {
+        QSqlQuery query(m_db1);
+        querystring = "UPDATE " + m_selected_table + " SET previous_date = 0, review_date = 0, interval = 1, ease = 2.5, card_state = 'New' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
+        query.exec(querystring);
+    }
+}
+
+void dbmanager::suspend_cards()
+{
+    QString querystring;
+    for(int i = 0; i < m_model.m_selectedIds.size(); i++)
+    {
+        QSqlQuery query(m_db1);
+        querystring = "UPDATE " + m_selected_table + " SET card_state = 'Suspended' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
+        query.exec(querystring);
+    }
+}
+
+void dbmanager::unsuspend_cards()
+{
+    QString querystring;
+    for(int i = 0; i < m_model.m_selectedIds.size(); i++)
+    {
+        if(m_model.m_card_states[i] == "Suspended")
+        {
+            QDateTime review = m_today.addDays(m_model.m_intervals[i]);
+            QString review_date = review.toString(m_time_format);
+
+            QSqlQuery query(m_db1);
+            querystring = "UPDATE " + m_selected_table + " SET previous_date = " + "'" + m_today.toString(m_time_format) + "'" + ", review_date = " + "'" + review_date + "'" + ", card_state = 'Review' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
+            query.exec(querystring);
+            qInfo() << querystring;
+        }
+    }
 }
 
 void dbmanager::reload_m_model()

@@ -48,6 +48,11 @@ public:
     Q_INVOKABLE void shiftClick(int index);
     Q_INVOKABLE void ctrlAll(int num_rows);
 
+    //update id of selected rows to m_selectedIds
+    Q_INVOKABLE void update_ids();
+    Q_INVOKABLE void update_intervals();
+    Q_INVOKABLE void update_card_states();
+
 public:
     void generateRoleNames();
     QHash<int, QByteArray> m_roleNames;
@@ -60,6 +65,9 @@ public:
     int m_sumColumnWidths;
 
     QList<int> m_selectedRows;
+    QList<int> m_selectedIds;
+    QList<int> m_intervals;
+    QList<QString> m_card_states;
 
 signals:
 

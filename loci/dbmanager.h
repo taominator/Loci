@@ -36,9 +36,12 @@ public:
 
     Q_INVOKABLE void set_selected_table(QString my_table);
     QVariant get_next_id(QString my_table);
-    Q_INVOKABLE void add_card();
-    //reload m_model
     Q_INVOKABLE void reload_m_model();
+    Q_INVOKABLE void add_card();
+    Q_INVOKABLE void remove_cards();
+    Q_INVOKABLE void reset_cards();
+    Q_INVOKABLE void suspend_cards();
+    Q_INVOKABLE void unsuspend_cards();
 
     //Creating and Deleting decks
     Q_INVOKABLE void create_table(QString my_table);
@@ -51,12 +54,14 @@ public:
     QSqlDatabase m_db2;
     tablemodel m_model;
     card_model m_card_model;
-    QString m_today;
 
     QStringList m_tables;
     QStringListModel m_deckListModel;
 
     QString m_selected_table;
+
+    QDateTime m_today;
+    QString m_time_format;
 
 };
 

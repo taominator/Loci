@@ -167,7 +167,6 @@ Item {
 
                     model: ListModel {
                         ListElement {name: "New"}
-                        ListElement {name: "Learning"}
                         ListElement {name: "Review"}
                         ListElement {name: "Suspended"}
                         //ListElement {name: "Buried"}
@@ -344,9 +343,9 @@ Item {
             }
 
             Rectangle{
-                id: add
+                id: add_card
                 color: "orange"
-                width: parent.width / 4
+                width: parent.width / 5
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
@@ -372,13 +371,41 @@ Item {
             }
 
             Rectangle{
-                id: reset
-                color: "red"
-                width: parent.width / 4
+                id: delete_card
+                color: "purple"
+                width: parent.width / 5
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
-                    left: add.right
+                    left: add_card.right
+                }
+                border.color: "black"
+                Text {
+                    text: "Delete"
+                    font.pixelSize: parent. height * (2/3)
+                    anchors.centerIn: parent
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+
+                    onClicked: {
+                        dbmanager.remove_cards()
+                        tableLoader.source = ""
+                        dbmanager.reload_m_model()
+                        tableLoader.source = "DeckTableView.qml"
+                    }
+                }
+            }
+
+            Rectangle{
+                id: reset_card
+                color: "red"
+                width: parent.width / 5
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: delete_card.right
                 }
                 border.color: "black"
                 Text {
@@ -389,17 +416,24 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
+
+                    onClicked: {
+                        dbmanager.reset_cards()
+                        tableLoader.source = ""
+                        dbmanager.reload_m_model()
+                        tableLoader.source = "DeckTableView.qml"
+                    }
                 }
             }
 
             Rectangle{
-                id: suspend
+                id: suspend_card
                 color: "gray"
-                width: parent.width / 4
+                width: parent.width / 5
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
-                    left: reset.right
+                    left: reset_card.right
                 }
                 Text {
                     text: "Suspend"
@@ -411,17 +445,24 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
+
+                    onClicked: {
+                        dbmanager.suspend_cards()
+                        tableLoader.source = ""
+                        dbmanager.reload_m_model()
+                        tableLoader.source = "DeckTableView.qml"
+                    }
                 }
             }
 
             Rectangle{
                 id: unsuspend
                 color: "yellow"
-                width: parent.width / 4
+                width: parent.width / 5
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
-                    left: suspend.right
+                    left: suspend_card.right
                 }
                 border.color: "black"
                 Text {
@@ -432,6 +473,13 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
+
+                    onClicked: {
+                        dbmanager.unsuspend_cards()
+                        tableLoader.source = ""
+                        dbmanager.reload_m_model()
+                        tableLoader.source = "DeckTableView.qml"
+                    }
                 }
             }
         }
