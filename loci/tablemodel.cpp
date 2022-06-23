@@ -3,6 +3,7 @@
 tablemodel::tablemodel(QObject *parent)
     : QSqlQueryModel{parent}
 {
+    m_numInternalFields = 11;
     m_defaultColumnWidth = 100;
 }
 
@@ -63,7 +64,7 @@ void tablemodel::generateRoleNames()
 void tablemodel::generateColumnWidths()
 {
     int j = 0;
-    while(j < 11)
+    while(j < m_numInternalFields)
     {
         m_columnWidths[j] = 0;
         j++;
@@ -71,7 +72,7 @@ void tablemodel::generateColumnWidths()
     for(int i = j; i < record().count(); i ++){
         m_columnWidths[i] = m_defaultColumnWidth;
     }
-    m_sumColumnWidths = (record().count() - 11) * m_defaultColumnWidth;
+    m_sumColumnWidths = (record().count() - m_numInternalFields) * m_defaultColumnWidth;
     rectifyLastColumnWidth();
 }
 
@@ -221,7 +222,6 @@ void tablemodel::update_intervals()
         m_intervals.append(this->record(m_selectedRows.at(i)).value(6).toInt());
     }
     emit this->layoutChanged();
-    qInfo() << m_intervals;
 }
 
 void tablemodel::update_card_states()
@@ -232,6 +232,5 @@ void tablemodel::update_card_states()
         m_card_states.append(this->record(m_selectedRows.at(i)).value(10).toString());
     }
     emit this->layoutChanged();
-    qInfo() << m_card_states;
 }
 

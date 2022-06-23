@@ -58,6 +58,7 @@ public:
     QHash<int, QByteArray> m_roleNames;
 
     QSqlDatabase db1;
+    int m_numInternalFields;
     QHash<int, int> m_columnWidths;
     int m_defaultColumnWidth;
     int m_borderWidth = 20;

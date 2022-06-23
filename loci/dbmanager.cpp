@@ -24,6 +24,8 @@ dbmanager::dbmanager(QObject *parent)
     //m_today = today.toString(time_format);
 
     m_deckListModel.setStringList(m_tables);
+
+    m_internal_fields = {"deckname", "id", "Question", "Answer", "previous_date", "review_date", "interval", "ease", "easy_bonus", "interval_modifier", "card_state"};
 }
 
 void dbmanager::setModel(QString tablename)
@@ -206,4 +208,79 @@ void dbmanager::drop_table(QString my_table)
 
     m_tables = m_db1.tables(QSql::Tables);
     m_deckListModel.setStringList(m_tables);
+}
+
+void dbmanager::create_field(QString my_table, QString my_field)
+{
+    if( m_internal_fields.contains(my_field))
+    {
+        return;
+    }
+
+    QString querystring;
+    if(m_model.columnCount() - m_model.m_numInternalFields > 1)
+    {
+        querystring = "ALTER TABLE " + my_table + " ADD " + my_field + " TEXT DEFAULT 'regular_field';";
+    }
+    else if (m_model.columnCount() - m_model.m_numInternalFields == 0)
+    {
+        querystring = "ALTER TABLE " + my_table + " ADD " + my_field + " TEXT DEFAULT 'question_field';";
+    }
+    else
+    {
+        querystring = "ALTER TABLE " + my_table + " ADD " + my_field + " TEXT DEFAULT 'answer_field';";
+    }
+
+
+    qInfo() << querystring;
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    reload_m_model();
+}
+
+void dbmanager::drop_field(QString my_table, QString my_field)
+{
+    if( m_internal_fields.contains(my_field))
+    {
+        return;
+    }
+
+
+    QString querystring;
+
+    if(my_field != m_model.record().fieldName(m_model.m_numInternalFields) && my_field != m_model.record().fieldName(m_model.m_numInternalFields+1) && m_model.record().count() > m_model.m_numInternalFields + 2)
+    {
+        querystring = "ALTER TABLE " + my_table + " DROP " + my_field + ";";
+    }
+    else if (m_model.record().count() < m_model.m_numInternalFields + 3)
+    {
+        if(m_model.record().count() == m_model.m_numInternalFields + 2)
+        {
+            if(my_field == m_model.record().fieldName(m_model.m_numInternalFields + 1))
+            {
+                querystring = "ALTER TABLE " + my_table + " DROP " + my_field + ";";
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        querystring = "ALTER TABLE " + my_table + " DROP " + my_field + ";";
+
+    }
+    else
+    {
+        return;
+    }
+
+
+    qInfo() << querystring;
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    reload_m_model();
 }

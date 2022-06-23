@@ -305,6 +305,14 @@ Item {
                         text: "Add Field"
                         font.pixelSize: parent.height / 3
                     }
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: {
+                            dbmanager.create_field(field_deck_input.text, field_field_input.text)
+                        }
+                    }
                 }
 
                 Rectangle {
@@ -320,6 +328,14 @@ Item {
                         anchors.centerIn: parent
                         text: "Delete field"
                         font.pixelSize: parent.height / 3
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: {
+                            dbmanager.drop_field(field_deck_input.text, field_field_input.text)
+                        }
                     }
                 }
             }
