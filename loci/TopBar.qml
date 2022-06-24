@@ -60,10 +60,33 @@ Rectangle {
     }
 
     Rectangle {
-        id: edit_button
+        id: preview_button
         width: parent.width/6
         anchors {
             left: deck_button.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+        color: "lime"
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                page = "previewscreen.qml"
+            }
+        }
+        Text {
+            text: "Preview Card"
+            anchors.centerIn: parent
+            font.pixelSize: m_model.getBorderWidth()
+        }
+    }
+
+    Rectangle {
+        id: edit_button
+        width: parent.width/6
+        anchors {
+            left: preview_button.right
             top: parent.top
             bottom: parent.bottom
         }
@@ -91,6 +114,13 @@ Rectangle {
             bottom: parent.bottom
         }
         color: "green"
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+
+            }
+        }
     }
 
 }

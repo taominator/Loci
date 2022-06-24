@@ -284,3 +284,15 @@ void dbmanager::drop_field(QString my_table, QString my_field)
 
     reload_m_model();
 }
+
+int dbmanager::get_height(bool show_front, int row)
+{
+    if(show_front)
+    {
+        return row != m_model.m_numInternalFields ? 0 : m_model.getBorderWidth() * 4;
+    }
+    else
+    {
+        return row < m_model.m_numInternalFields ? 0 : m_model.getBorderWidth() * 4;
+    }
+}

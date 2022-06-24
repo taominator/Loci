@@ -52,6 +52,9 @@ public:
     Q_INVOKABLE void create_field(QString my_table, QString my_field);
     Q_INVOKABLE void drop_field(QString my_table, QString my_field);
 
+    //height values for listview delegates in reviewscreen.qml
+    Q_INVOKABLE int get_height(bool show_front, int row);
+
 signals:
 
 public:

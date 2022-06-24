@@ -20,8 +20,9 @@ resources.files = main.qml \
     DeckTableView.qml \
     DeckTableView2.qml \
     CardListView.qml \
-    test.qml \
-    deckedit.qml
+    deckedit.qml \
+    reviewscreen.qml \
+    previewscreen.qml
 
 
 resources.prefix = /$${TARGET}
@@ -42,6 +43,8 @@ DISTFILES += \
     CardListView.qml \
     DeckTableView.qml \
     DeckTableView2.qml \
-    deckedit.qml
+    deckedit.qml \
+    previewscreen.qml \
+    reviewscreen.qml
 
 
