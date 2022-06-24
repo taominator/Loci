@@ -55,6 +55,10 @@ public:
     //height values for listview delegates in reviewscreen.qml
     Q_INVOKABLE int get_height(bool show_front, int row);
 
+    //number of new and review cards for each decks in homescreen
+    Q_INVOKABLE int getNumNewCards(QString my_table);
+    Q_INVOKABLE int getNumReviewCards(QString my_table);
+
 signals:
 
 public:

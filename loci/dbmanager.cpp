@@ -296,3 +296,29 @@ int dbmanager::get_height(bool show_front, int row)
         return row < m_model.m_numInternalFields ? 0 : m_model.getBorderWidth() * 4;
     }
 }
+
+int dbmanager::getNumNewCards(QString my_table)
+{
+    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'New';";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    query.seek(0);
+    int rows = query.value(0).toString().toInt();
+
+    return rows;
+}
+
+int dbmanager::getNumReviewCards(QString my_table)
+{
+    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'Review';";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    query.seek(0);
+    int rows = query.value(0).toString().toInt();
+
+    return rows;
+}
