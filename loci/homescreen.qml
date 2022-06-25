@@ -3,6 +3,20 @@ import QtQuick
 Item {
     anchors.fill: parent
 
+    Loader {
+        id: my_loader
+        z: 2
+        height: parent.height * (19/20)
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+
+        source: "reviewscreen.qml"
+        visible: item ? item.is_visible : false
+    }
+
     Rectangle {
         height: parent.height * (19/20)
         color: "red"
@@ -127,6 +141,19 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+                                if(dbmanager.setReviewCard(display)) {
+                                    my_loader.source = ""
+                                    my_loader.source = "reviewscreen.qml"
+                                    my_loader.item.is_visible = true
+                                }
+                                else if(dbmanager.setNewCard(display)) {
+                                    my_loader.source = ""
+                                    my_loader.source = "reviewscreen.qml"
+                                    my_loader.item.is_visible = true
+                                }
+                            }
                         }
                     }
 
@@ -149,6 +176,14 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+                                if (dbmanager.setNewCard(display)) {
+                                    my_loader.source = ""
+                                    my_loader.source = "reviewscreen.qml"
+                                    my_loader.item.is_visible = true
+                                }
+                            }
                         }
                     }
 
@@ -171,6 +206,14 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+
+                            onClicked: {
+                                if (dbmanager.setReviewCard(display)) {
+                                    my_loader.source = ""
+                                    my_loader.source = "reviewscreen.qml"
+                                    my_loader.item.is_visible = true
+                                }
+                            }
                         }
                     }
                 }

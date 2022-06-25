@@ -3,10 +3,36 @@ import QtQuick 2.0
 Item {
     anchors.fill: parent
 
+    property bool is_visible: false
+
+    Rectangle {
+        id: back_bar
+        color: "pink"
+        height: parent.height * (2/20)
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+        Text {
+            anchors.centerIn: parent
+            text: "Back"
+            font.pixelSize: parent.height / 3
+        }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: {
+                is_visible = !is_visible
+            }
+        }
+    }
+
     Rectangle {
         color: "red"
         id: page_content
-        height: parent.height * (19/20)
+        height: parent.height * (18/20)
 
         anchors {
             left: parent.left
@@ -33,8 +59,6 @@ Item {
                 model: card_model
 
                 delegate: Rectangle {
-                    //height: model.row !== m_model.m_numInternalFields ? 0 : m_model.getBorderWidth() * 4
-                    //height: card_side.show_front ? (model.row === m_model.m_numInternalFields ? m_model.getBorderWidth() * 4 : 0) : (model.row < m_model.m_numInternalFields ? 0 : m_model.getBorderWidth() * 4)
                     height: dbmanager.get_height(card_side.show_front, model.row)
                     color: "red"
                     clip: true

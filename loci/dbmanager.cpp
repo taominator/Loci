@@ -322,3 +322,39 @@ int dbmanager::getNumReviewCards(QString my_table)
 
     return rows;
 }
+
+bool dbmanager::setReviewCard(QString my_table)
+{
+    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'Review';";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    if(query.seek(0))
+    {
+        m_card_model.set_cardinfo(my_table, query.record().value(1).toString());
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool dbmanager::setNewCard(QString my_table)
+{
+    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'New';";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+
+    if(query.seek(0))
+    {
+        m_card_model.set_cardinfo(my_table, query.record().value(1).toString());
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}

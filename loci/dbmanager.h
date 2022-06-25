@@ -59,6 +59,10 @@ public:
     Q_INVOKABLE int getNumNewCards(QString my_table);
     Q_INVOKABLE int getNumReviewCards(QString my_table);
 
+    //update card_model for reviewscreen
+    Q_INVOKABLE bool setReviewCard(QString my_table);
+    Q_INVOKABLE bool setNewCard(QString my_table);
+
 signals:
 
 public:
