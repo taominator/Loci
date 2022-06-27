@@ -110,7 +110,7 @@ QVariant dbmanager::get_next_id(QString my_table)
 
 void dbmanager::add_card()
 {
-    QString querystring = "INSERT INTO " + m_selected_table + " (deckname, id) VALUES (" + "\'" + m_selected_table + "\'" + ", " + get_next_id(m_selected_table).toString() + ");";
+    QString querystring = "INSERT INTO " + m_selected_table + " (deckname, id, interval_left, card_state) VALUES (" + "\'" + m_selected_table + "\'" + ", " + get_next_id(m_selected_table).toString() + ", '-1', 'New');";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -138,14 +138,81 @@ void dbmanager::reset_cards()
     }
 }
 
+int dbmanager::getIntervalLeft(QString my_table, QString id, QString card_state)
+{
+    if(card_state == "New")
+    {
+        return -1;
+    }
+
+    QSqlQuery query(m_db1);
+    QString querystring = "SELECT * FROM " + my_table + " WHERE id = " + id + ";";
+    query.exec(querystring);
+
+    query.first();
+    QString previous_date_string = query.value(4).toString();
+    QDateTime previous_date = QDateTime::fromString(previous_date_string, m_time_format);
+    QString review_date_string = query.value(5).toString();
+    QDateTime review_date = QDateTime::fromString(review_date_string, m_time_format);
+
+    int interval = previous_date.daysTo(review_date);
+    int days_passed = previous_date.daysTo(m_today);
+    int interval_left = interval - days_passed;
+
+    return interval_left;
+}
+
+int dbmanager::readIntervalLeft(QString my_table, QString id)
+{
+    QSqlQuery query(m_db1);
+    QString querystring = "SELECT * FROM " + my_table + " WHERE id = " + id + ";";
+    query.exec(querystring);
+
+    query.first();
+    int interval_left = query.value(6).toInt();
+    return interval_left;
+}
+
+QStringList dbmanager::getNewDatesAndCardState(QString my_table, QString id, int interval_left)
+{
+    if(interval_left == -1)
+    {
+        return QStringList {"", "", "New"};
+    }
+
+    QSqlQuery query(m_db1);
+    QString querystring = "SELECT * FROM " + my_table + " WHERE id = " + id + ";";
+    query.exec(querystring);
+
+    query.first();
+    QString previous_date_string = query.value(4).toString();
+    QDateTime previous_date = QDateTime::fromString(previous_date_string, m_time_format);
+    QString review_date_string = query.value(5).toString();
+    QDateTime review_date = QDateTime::fromString(review_date_string, m_time_format);
+
+    int interval = previous_date.daysTo(review_date);
+    int days_passed = interval - interval_left;
+
+    QDateTime new_previous = m_today.addDays(-days_passed);
+    QString new_previous_date = new_previous.toString(m_time_format);
+    QDateTime new_review = m_today.addDays(interval_left);
+    QString new_review_date = new_review.toString(m_time_format);
+
+    return QStringList {new_previous_date, new_review_date, "Review"};
+}
+
 void dbmanager::suspend_cards()
 {
     QString querystring;
     for(int i = 0; i < m_model.m_selectedIds.size(); i++)
     {
+        QString card_state = m_model.m_card_states[i];
+        int interval_left = getIntervalLeft(m_selected_table, QString::number(m_model.m_selectedIds[i]), card_state);
+
         QSqlQuery query(m_db1);
-        querystring = "UPDATE " + m_selected_table + " SET card_state = 'Suspended' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
+        querystring = "UPDATE " + m_selected_table + " SET interval_left = " + QString::number(interval_left) + ", card_state = 'Suspended' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
         query.exec(querystring);
+        qInfo() << querystring;
     }
 }
 
@@ -156,11 +223,14 @@ void dbmanager::unsuspend_cards()
     {
         if(m_model.m_card_states[i] == "Suspended")
         {
-            QDateTime review = m_today.addDays(m_model.m_intervals[i]);
-            QString review_date = review.toString(m_time_format);
+            int interval_left = readIntervalLeft(m_selected_table, QString::number(m_model.m_selectedIds[i]));
+            QStringList new_dates = getNewDatesAndCardState(m_selected_table, QString::number(m_model.m_selectedIds[i]), interval_left);
+
+            //QDateTime review = m_today.addDays(m_model.m_intervals[i]);
+            //QString review_date = review.toString(m_time_format);
 
             QSqlQuery query(m_db1);
-            querystring = "UPDATE " + m_selected_table + " SET previous_date = " + "'" + m_today.toString(m_time_format) + "'" + ", review_date = " + "'" + review_date + "'" + ", card_state = 'Review' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
+            querystring = "UPDATE " + m_selected_table + " SET previous_date = '" + new_dates[0] + "', review_date = '" + new_dates[1] + "', card_state = '" + new_dates[2] + "' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
             query.exec(querystring);
             qInfo() << querystring;
         }
@@ -299,7 +369,8 @@ int dbmanager::get_height(bool show_front, int row)
 
 int dbmanager::getNumNewCards(QString my_table)
 {
-    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'New';";
+    QString today_date = m_today.toString(m_time_format);
+    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'New' AND review_date = '" + today_date + "';";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -312,7 +383,8 @@ int dbmanager::getNumNewCards(QString my_table)
 
 int dbmanager::getNumReviewCards(QString my_table)
 {
-    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'Review';";
+    QString today_date = m_today.toString(m_time_format);
+    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'Review' AND review_date = '" + today_date + "';";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -325,7 +397,8 @@ int dbmanager::getNumReviewCards(QString my_table)
 
 bool dbmanager::setReviewCard(QString my_table)
 {
-    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'Review';";
+    QString today_date = m_today.toString(m_time_format);
+    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'Review' AND review_date = '" + today_date + "';";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -343,7 +416,8 @@ bool dbmanager::setReviewCard(QString my_table)
 
 bool dbmanager::setNewCard(QString my_table)
 {
-    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'New';";
+    QString today_date = m_today.toString(m_time_format);
+    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'New' AND review_date = '" + today_date + "';";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -357,4 +431,74 @@ bool dbmanager::setNewCard(QString my_table)
     {
         return false;
     }
+}
+
+QVariant dbmanager::getInterval()
+{
+    QDateTime previous = QDateTime::fromString(m_card_model.contents.at(4), m_time_format);
+    int interval = previous.daysTo(m_today);
+    return interval;
+}
+
+QVariant dbmanager::getEase()
+{
+    QVariant value = m_card_model.contents.at(7);
+    double ease = value.toDouble();
+    return ease;
+}
+
+void dbmanager::againButton()
+{
+    QString my_table = m_card_model.m_deckname;
+    QString id = m_card_model.m_card_id;
+
+    QDateTime previous = m_today.addDays(-1);
+    QString previous_date = previous.toString(m_time_format);
+    QString review_date = m_today.toString(m_time_format);
+
+    QString querystring = "UPDATE " + my_table + " SET previous_date = '" + previous_date + "', review_date = '" + review_date + "', card_state = 'Review' WHERE deckname = '" + my_table + "' AND id = '" + id + "';";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+    qInfo() << querystring;
+}
+
+void dbmanager::hardButton()
+{
+    QString my_table = m_card_model.m_deckname;
+    QString id = m_card_model.m_card_id;
+    QString card_state = m_card_model.contents.at(10);
+    int interval = getInterval().toInt();
+    double ease = getEase().toDouble();
+
+    int new_interval = qCeil(interval * ease / 2);
+    double new_ease;
+    if(ease > 1.30)
+    {
+        new_ease = ease - 0.15;
+    }
+    else
+    {
+        new_ease = ease;
+    }
+
+    QDateTime newReview;
+    if(card_state == "Review")
+    {
+        newReview = m_today.addDays(new_interval);
+    }
+    else
+    {
+        newReview = m_today.addDays(1);
+    }
+    QString new_previous_date = m_today.toString(m_time_format);
+    QString new_review_date = newReview.toString(m_time_format);
+
+    qInfo() << ease;
+    qInfo() << new_ease;
+    QString querystring = "UPDATE " + my_table + " SET previous_date = '" + new_previous_date + "', review_date = '" + new_review_date + "', ease = " + QString::number(new_ease) + ", card_state = 'Review' WHERE deckname = '" + my_table + "' AND id = '" + id + "';";
+    QSqlQuery query(m_db1);
+    query.prepare(querystring);
+    query.exec();
+    qInfo() << querystring;
 }

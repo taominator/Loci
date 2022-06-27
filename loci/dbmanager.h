@@ -10,6 +10,7 @@
 #include <QStringListModel>
 #include <card_model.h>
 #include <QDateTime>
+#include <QtMath>
 
 
 class dbmanager : public QObject
@@ -41,6 +42,13 @@ public:
     Q_INVOKABLE void add_card();
     Q_INVOKABLE void remove_cards();
     Q_INVOKABLE void reset_cards();
+
+    //Interval_left = interval - days between previous date and today
+    Q_INVOKABLE int getIntervalLeft(QString my_table, QString id, QString card_state);
+    Q_INVOKABLE int readIntervalLeft(QString my_table, QString id);
+    //returns new previous and review dates for unsuspending cards
+    Q_INVOKABLE QStringList getNewDatesAndCardState(QString my_table, QString id, int interval_left);
+
     Q_INVOKABLE void suspend_cards();
     Q_INVOKABLE void unsuspend_cards();
 
@@ -62,6 +70,17 @@ public:
     //update card_model for reviewscreen
     Q_INVOKABLE bool setReviewCard(QString my_table);
     Q_INVOKABLE bool setNewCard(QString my_table);
+
+    //interval between previous and review dates
+    QVariant getInterval();
+    //get ease of card in card_model
+    QVariant getEase();
+
+    //New card answer buttons
+    Q_INVOKABLE void againButton();
+    Q_INVOKABLE void hardButton();
+    //Q_INVOKABLE void goodButton();
+    //Q_INVOKABLE void easyButton();
 
 signals:
 

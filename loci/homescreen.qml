@@ -3,6 +3,7 @@ import QtQuick
 Item {
     anchors.fill: parent
 
+    property string current_deck: ""
     Loader {
         id: my_loader
         z: 2
@@ -15,6 +16,25 @@ Item {
 
         source: "reviewscreen.qml"
         visible: item ? item.is_visible : false
+
+        Connections {
+                target: my_loader.item
+                function onNextChanged()
+                {
+                    if(dbmanager.setReviewCard(current_deck)) {
+                        my_loader.source = ""
+                        my_loader.source = "reviewscreen.qml"
+                        my_loader.item.is_visible = true
+                        //console.log("yo: " + current_deck)
+                    }
+                    else if(dbmanager.setNewCard(current_deck)) {
+                        my_loader.source = ""
+                        my_loader.source = "reviewscreen.qml"
+                        my_loader.item.is_visible = true
+                        //console.log("hey: " + current_deck)
+                    }
+                }
+            }
     }
 
     Rectangle {
@@ -105,6 +125,7 @@ Item {
 
 
             ListView {
+                id: deckListView
                 anchors {
                     top: headers_bar.bottom
                     bottom: parent.bottom
@@ -143,6 +164,7 @@ Item {
                             cursorShape: Qt.PointingHandCursor
 
                             onClicked: {
+                                current_deck = display
                                 if(dbmanager.setReviewCard(display)) {
                                     my_loader.source = ""
                                     my_loader.source = "reviewscreen.qml"

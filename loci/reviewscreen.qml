@@ -4,6 +4,7 @@ Item {
     anchors.fill: parent
 
     property bool is_visible: false
+    property bool next: false
 
     Rectangle {
         id: back_bar
@@ -140,9 +141,11 @@ Item {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
 
-                    //onClicked: {
-                    //    dbmanager.drop_field(field_deck_input.text, field_field_input.text)
-                    //}
+                    onClicked: {
+                        dbmanager.againButton()
+                        is_visible = !is_visible
+                        next = !next
+                    }
                 }
             }
 
@@ -164,9 +167,11 @@ Item {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
 
-                    //onClicked: {
-                    //    dbmanager.drop_field(field_deck_input.text, field_field_input.text)
-                    //}
+                    onClicked: {
+                        dbmanager.hardButton()
+                        is_visible = !is_visible
+                        next = !next
+                    }
                 }
             }
 
