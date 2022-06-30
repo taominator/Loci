@@ -4,6 +4,7 @@ Item {
     anchors.fill: parent
 
     property string current_deck: ""
+
     Loader {
         id: my_loader
         z: 2
@@ -21,18 +22,43 @@ Item {
                 target: my_loader.item
                 function onNextChanged()
                 {
-                    if(dbmanager.setReviewCard(current_deck)) {
-                        my_loader.source = ""
-                        my_loader.source = "reviewscreen.qml"
-                        my_loader.item.is_visible = true
-                        //console.log("yo: " + current_deck)
+                    console.log(dbmanager.getCardType())
+                    console.log(current_deck && (dbmanager.getCardType() === "both" || dbmanager.getCardType() === "review"))
+                    console.log(current_deck && (dbmanager.getCardType() === "both" || dbmanager.getCardType() === "new"))
+                    if(dbmanager.getCardType() === "review") {
+                        if(dbmanager.setReviewCard(current_deck)) {
+                            console.log("skfgihusg")
+                            my_loader.source = ""
+                            my_loader.source = "reviewscreen.qml"
+                            my_loader.item.is_visible = true
+                        }
                     }
-                    else if(dbmanager.setNewCard(current_deck)) {
-                        my_loader.source = ""
-                        my_loader.source = "reviewscreen.qml"
-                        my_loader.item.is_visible = true
-                        //console.log("hey: " + current_deck)
+                    else if(dbmanager.getCardType() === "new") {
+                        if(dbmanager.setNewCard(current_deck)) {
+                            console.log("fhjsrz")
+                            my_loader.source = ""
+                            my_loader.source = "reviewscreen.qml"
+                            my_loader.item.is_visible = true
+                        }
                     }
+                    else if(dbmanager.getCardType() === "both")
+                    {
+                        if(dbmanager.setReviewCard(current_deck)) {
+                            console.log("pkpsfg")
+                            my_loader.source = ""
+                            my_loader.source = "reviewscreen.qml"
+                            my_loader.item.is_visible = true
+                        }
+                        else if(dbmanager.setNewCard(current_deck)) {
+                            console.log("woitiv")
+                            my_loader.source = ""
+                            my_loader.source = "reviewscreen.qml"
+                            my_loader.item.is_visible = true
+                        }
+                    }
+
+                    deckListView.model = ""
+                    deckListView.model = m_deckListModel
                 }
             }
     }
@@ -165,6 +191,7 @@ Item {
 
                             onClicked: {
                                 current_deck = display
+                                dbmanager.setCardType("both")
                                 if(dbmanager.setReviewCard(display)) {
                                     my_loader.source = ""
                                     my_loader.source = "reviewscreen.qml"
@@ -200,6 +227,8 @@ Item {
                             cursorShape: Qt.PointingHandCursor
 
                             onClicked: {
+                                current_deck = display
+                                dbmanager.setCardType("new")
                                 if (dbmanager.setNewCard(display)) {
                                     my_loader.source = ""
                                     my_loader.source = "reviewscreen.qml"
@@ -230,6 +259,8 @@ Item {
                             cursorShape: Qt.PointingHandCursor
 
                             onClicked: {
+                                current_deck = display
+                                dbmanager.setCardType("review")
                                 if (dbmanager.setReviewCard(display)) {
                                     my_loader.source = ""
                                     my_loader.source = "reviewscreen.qml"

@@ -75,12 +75,20 @@ public:
     QVariant getInterval();
     //get ease of card in card_model
     QVariant getEase();
+    //get easy_bonus value of card in card_model
+    QVariant getEasyBonus();
+
 
     //New card answer buttons
     Q_INVOKABLE void againButton();
     Q_INVOKABLE void hardButton();
-    //Q_INVOKABLE void goodButton();
-    //Q_INVOKABLE void easyButton();
+    Q_INVOKABLE void goodButton();
+    Q_INVOKABLE void easyButton();
+
+
+    //card_type for continious review of one type of cards in homescreen.qml
+    Q_INVOKABLE QString getCardType();
+    Q_INVOKABLE void setCardType(QString str);
 
 signals:
 
@@ -99,6 +107,8 @@ public:
     QDateTime m_today;
     QString m_time_format;
 
+    //card_type for continious review of one type of cards in homescreen.qml
+    QString m_card_type = "";
 };
 
 #endif // DBMANAGER_H
