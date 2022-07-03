@@ -4,7 +4,6 @@ Item {
     anchors.fill: parent
 
     Rectangle {
-        color: "red"
         id: page_content
         height: parent.height * (19/20)
 
@@ -33,21 +32,14 @@ Item {
                 model: card_model
 
                 delegate: Rectangle {
-                    //height: model.row !== m_model.m_numInternalFields ? 0 : m_model.getBorderWidth() * 4
-                    //height: card_side.show_front ? (model.row === m_model.m_numInternalFields ? m_model.getBorderWidth() * 4 : 0) : (model.row < m_model.m_numInternalFields ? 0 : m_model.getBorderWidth() * 4)
                     height: dbmanager.get_height(card_side.show_front, model.row)
-                    color: "red"
+                    color: "#1777CB"
                     clip: true
                     width: review_view.width
 
                     Text {
                         height: parent.height / 2
                         anchors.centerIn: parent
-                        //anchors {
-                        //    left: parent.left
-                        //    right: parent.right
-                        //    top: parent.top
-                        //}
                         text: content
                         font.pixelSize: parent.height * (1.5/3)
                     }

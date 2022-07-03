@@ -53,6 +53,8 @@ public:
     Q_INVOKABLE void update_intervals();
     Q_INVOKABLE void update_card_states();
 
+    Q_INVOKABLE int getNumInternalFields();
+
 public:
     void generateRoleNames();
     QHash<int, QByteArray> m_roleNames;

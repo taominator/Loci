@@ -19,7 +19,7 @@ Item {
         Rectangle {
             id: drag_area
             width: m_model.getBorderWidth()
-            color: "blue"
+            color: "#8FCAF9"
             z: 1
             anchors {
                 top: parent.top
@@ -80,6 +80,7 @@ Item {
                 id: today_mouse_area
                 anchors.fill: parent
                 hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
 
                 onClicked: {
                     tableLoader.source = "DeckTableView2.qml"
@@ -91,7 +92,7 @@ Item {
 
         Rectangle{
             id: card_state
-            color: "gray"
+            color: "#BBDDF8"
             height: state_view.minimized? m_model.getBorderWidth() * 1.5 : parent.height * (3/10)
             anchors {
                 top: due_today.bottom
@@ -103,7 +104,7 @@ Item {
                 id: minimize_state
                 height: m_model.getBorderWidth() * 1.5
                 width: m_model.getBorderWidth()
-                color: "purple"
+                color: "black"
                 anchors{
                     top: parent.top
                     left: parent.left
@@ -111,6 +112,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
                     onClicked: {
                         state_view.minimized = !state_view.minimized
                     }
@@ -148,7 +150,7 @@ Item {
             Rectangle {
                 id: state_view
                 property bool minimized: false
-                color: "pink"
+                color: "#BBDDF8"
                 height: parent.height - m_model.getBorderWidth() * 2
                 width: state_bar.width - m_model.getBorderWidth()
                 anchors {
@@ -202,7 +204,7 @@ Item {
 
         Rectangle {
             id: decklist
-            color: "lime"
+            color: "#BBDDF8"
             anchors {
                 top: card_state.bottom
                 bottom: parent.bottom
@@ -215,7 +217,7 @@ Item {
                 id: minimize_decklist
                 height: m_model.getBorderWidth() * 1.5
                 width: m_model.getBorderWidth()
-                color: "purple"
+                color: "gray"
                 anchors{
                     top: parent.top
                     left: parent.left
@@ -223,6 +225,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
                     onClicked: {
                         deckview.minimized = !deckview.minimized
                     }
@@ -265,7 +268,7 @@ Item {
 
             Rectangle {
                 id: deckview
-                color: "pink"
+                color: "#BBDDF8"
                 width: deckbar.width - m_model.getBorderWidth()
                 property bool minimized: false
                 anchors {
@@ -335,7 +338,6 @@ Item {
 
         Rectangle {
             id: options
-            color: "purple"
             height: parent.height * (1/20)
             anchors {
                 right: parent.right
@@ -344,14 +346,16 @@ Item {
 
             Rectangle{
                 id: add_card
-                color: "orange"
+                color: "#1669B2"
                 width: parent.width / 5
+                clip: true
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
                     left: parent.left
                 }
-                border.color: "black"
+                border.color: "gray"
+                border.width: m_model.getBorderWidth() / 4
                 Text {
                     text: "Add"
                     font.pixelSize: parent. height * (2/3)
@@ -372,14 +376,16 @@ Item {
 
             Rectangle{
                 id: delete_card
-                color: "purple"
+                color: "#1669B2"
                 width: parent.width / 5
+                clip: true
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
                     left: add_card.right
                 }
-                border.color: "black"
+                border.color: "gray"
+                border.width: m_model.getBorderWidth() / 4
                 Text {
                     text: "Delete"
                     font.pixelSize: parent. height * (2/3)
@@ -400,14 +406,16 @@ Item {
 
             Rectangle{
                 id: reset_card
-                color: "red"
+                color: "#1669B2"
                 width: parent.width / 5
+                clip: true
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
                     left: delete_card.right
                 }
-                border.color: "black"
+                border.color: "gray"
+                border.width: m_model.getBorderWidth() / 4
                 Text {
                     text: "Reset"
                     font.pixelSize: parent. height * (2/3)
@@ -428,20 +436,22 @@ Item {
 
             Rectangle{
                 id: suspend_card
-                color: "gray"
+                color: "#1669B2"
                 width: parent.width / 5
+                clip: true
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
                     left: reset_card.right
                 }
+                border.color: "gray"
+                border.width: m_model.getBorderWidth() / 4
+
                 Text {
                     text: "Suspend"
                     font.pixelSize: parent. height * (2/3)
                     anchors.centerIn: parent
                 }
-
-                border.color: "black"
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
@@ -457,14 +467,16 @@ Item {
 
             Rectangle{
                 id: unsuspend
-                color: "yellow"
+                color: "#1669B2"
                 width: parent.width / 5
+                clip: true
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
                     left: suspend_card.right
                 }
-                border.color: "black"
+                border.color: "gray"
+                border.width: m_model.getBorderWidth() / 4
                 Text {
                     text: "Unsuspend"
                     font.pixelSize: parent. height * (2/3)
@@ -487,7 +499,7 @@ Item {
         Rectangle{
             id: upperRightRect
             height: parent.height * (9.5/20)
-            color: "green"
+            color: "#6393B9"
             anchors {
                 top: options.bottom
                 right: parent.right
@@ -529,7 +541,7 @@ Item {
             id: lowerRightRect
             height: parent.height * (9.5/20)
             width: rightRect.width
-            color: "yellow"
+            color: "#6393B9"
             anchors {
                 right: parent.right
                 bottom: parent.bottom
@@ -537,7 +549,7 @@ Item {
 
             Rectangle {
                 id: fieldRect
-                color: "#696969"
+                color: "#6393B9"
                 z: 1
                 anchors {
                     fill: parent

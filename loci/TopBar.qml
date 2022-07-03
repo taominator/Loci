@@ -11,17 +11,16 @@ Rectangle {
         top: parent.top
     }
 
-    color: "red"
-
     Rectangle {
         id: home_button
+        clip: true
         width: parent.width/6
         anchors {
             left: parent.left
             top: parent.top
             bottom: parent.bottom
         }
-        color: "purple"
+        color: "#838383"
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
@@ -38,13 +37,14 @@ Rectangle {
 
     Rectangle {
         id: deck_button
+        clip: true
         width: parent.width/6
         anchors {
             left: home_button.right
             top: parent.top
             bottom: parent.bottom
         }
-        color: "cyan"
+        color: "#B4B5B7"
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
@@ -61,13 +61,14 @@ Rectangle {
 
     Rectangle {
         id: preview_button
+        clip: true
         width: parent.width/6
         anchors {
             left: deck_button.right
             top: parent.top
             bottom: parent.bottom
         }
-        color: "lime"
+        color: "#838383"
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
@@ -84,13 +85,14 @@ Rectangle {
 
     Rectangle {
         id: edit_button
+        clip: true
         width: parent.width/6
         anchors {
             left: preview_button.right
             top: parent.top
             bottom: parent.bottom
         }
-        color: "gray"
+        color: "#B4B5B7"
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
@@ -107,13 +109,14 @@ Rectangle {
 
     Rectangle {
         id: search_button
+        clip: true
         anchors {
             left: edit_button.right
             right: parent.right
             top: parent.top
             bottom: parent.bottom
         }
-        color: "green"
+        color: "#838383"
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor

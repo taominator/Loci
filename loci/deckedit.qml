@@ -4,7 +4,6 @@ Item {
     anchors.fill: parent
 
     Rectangle {
-        color: "red"
         id: page_content
         height: parent.height * (19/20)
         anchors {
@@ -14,7 +13,6 @@ Item {
         }
 
         Rectangle {
-            color: "yellow"
             id: edit_deck
             height: parent.height * (4/10)
             anchors{
@@ -24,7 +22,7 @@ Item {
             }
 
             Rectangle {
-                color: "orange"
+                color: "#9CCCF4"
                 id: add_delete_deck
                 height: parent.height / 3
                 anchors {
@@ -41,7 +39,6 @@ Item {
             }
 
             Rectangle {
-                color: "green"
                 id: deck_deckname
                 height: parent.height / 3
                 anchors {
@@ -51,7 +48,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "red"
+                    color: "#69B3F1"
                     id: placeholder_deck
                     width: parent.width / 5
                     anchors {
@@ -69,7 +66,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "cyan"
+                    color: "#69B3F1"
                     id: deckinput_deck
                     anchors {
                         top: parent.top
@@ -102,7 +99,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "gray"
+                    color: "#0276D6"
                     id: add_deck
                     width: parent.width / 2
                     anchors {
@@ -126,7 +123,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "pink"
+                    color: "#316A99"
                     id: delete_deck
                     width: parent.width / 2
                     anchors {
@@ -163,7 +160,7 @@ Item {
             }
 
             Rectangle {
-                color: "orange"
+                color: "#9CCCF4"
                 id: add_delete_field
                 height: parent.height / 4
                 anchors {
@@ -180,7 +177,6 @@ Item {
             }
 
             Rectangle {
-                color: "green"
                 id: field_fieldname
                 height: parent.height / 4
                 anchors {
@@ -190,7 +186,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "red"
+                    color: "#558FBF"
                     id: placeholder_field
                     width: parent.width / 5
                     anchors {
@@ -208,7 +204,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "cyan"
+                    color: "#558FBF"
                     id: fieldinput_field
                     anchors {
                         top: parent.top
@@ -231,7 +227,6 @@ Item {
             }
 
             Rectangle {
-                color: "green"
                 id: field_deckname
                 height: parent.height / 4
                 anchors {
@@ -241,7 +236,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "yellow"
+                    color: "#69B3F1"
                     id: placeholder_deck_field
                     width: parent.width / 5
                     anchors {
@@ -259,7 +254,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "green"
+                    color: "#69B3F1"
                     id: deckinput_field
                     anchors {
                         top: parent.top
@@ -282,7 +277,6 @@ Item {
             }
 
             Rectangle {
-                color: "blue"
                 id: buttons_field
                 anchors {
                     top: field_deckname.bottom
@@ -292,7 +286,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "gray"
+                    color: "#0276D6"
                     id: add_field
                     width: parent.width / 2
                     anchors {
@@ -316,7 +310,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "pink"
+                    color: "#316A99"
                     id: delete_field
                     width: parent.width / 2
                     anchors {

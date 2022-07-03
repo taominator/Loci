@@ -8,7 +8,7 @@ Item {
 
     Rectangle {
         id: back_bar
-        color: "pink"
+        color: "#5F7A93"
         height: parent.height * (2/20)
         anchors {
             left: parent.left
@@ -31,7 +31,6 @@ Item {
     }
 
     Rectangle {
-        color: "red"
         id: page_content
         height: parent.height * (18/20)
 
@@ -61,7 +60,7 @@ Item {
 
                 delegate: Rectangle {
                     height: dbmanager.get_height(card_side.show_front, model.row)
-                    color: "red"
+                    color: "#1777CB"
                     clip: true
                     width: review_view.width
 

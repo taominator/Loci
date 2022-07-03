@@ -22,12 +22,8 @@ Item {
                 target: my_loader.item
                 function onNextChanged()
                 {
-                    console.log(dbmanager.getCardType())
-                    console.log(current_deck && (dbmanager.getCardType() === "both" || dbmanager.getCardType() === "review"))
-                    console.log(current_deck && (dbmanager.getCardType() === "both" || dbmanager.getCardType() === "new"))
                     if(dbmanager.getCardType() === "review") {
                         if(dbmanager.setReviewCard(current_deck)) {
-                            console.log("skfgihusg")
                             my_loader.source = ""
                             my_loader.source = "reviewscreen.qml"
                             my_loader.item.is_visible = true
@@ -35,7 +31,6 @@ Item {
                     }
                     else if(dbmanager.getCardType() === "new") {
                         if(dbmanager.setNewCard(current_deck)) {
-                            console.log("fhjsrz")
                             my_loader.source = ""
                             my_loader.source = "reviewscreen.qml"
                             my_loader.item.is_visible = true
@@ -44,13 +39,11 @@ Item {
                     else if(dbmanager.getCardType() === "both")
                     {
                         if(dbmanager.setReviewCard(current_deck)) {
-                            console.log("pkpsfg")
                             my_loader.source = ""
                             my_loader.source = "reviewscreen.qml"
                             my_loader.item.is_visible = true
                         }
                         else if(dbmanager.setNewCard(current_deck)) {
-                            console.log("woitiv")
                             my_loader.source = ""
                             my_loader.source = "reviewscreen.qml"
                             my_loader.item.is_visible = true
@@ -65,7 +58,7 @@ Item {
 
     Rectangle {
         height: parent.height * (19/20)
-        color: "red"
+        color: "#90CCFE"
         anchors {
             left: parent.left
             right: parent.right
@@ -73,7 +66,7 @@ Item {
         }
 
         Rectangle {
-            color: "green"
+            color: "#C2D3E1"
             anchors {
                 fill: parent
 
@@ -96,7 +89,7 @@ Item {
 
                 Rectangle {
                     id: deckname_header
-                    color: "orange"
+                    color: "#A5B2BC"
                     width: parent.width * (8/10)
                     border.color: "gray"
                     anchors {
@@ -114,7 +107,7 @@ Item {
 
                 Rectangle {
                     id: new_card_header
-                    color: "yellow"
+                    color: "#A5B2BC"
                     width: parent.width * (1/10)
                     border.color: "gray"
                     anchors {
@@ -132,7 +125,7 @@ Item {
 
                 Rectangle {
                     id: review_card_header
-                    color: "purple"
+                    color: "#A5B2BC"
                     width: parent.width * (1/10)
                     border.color: "gray"
                     anchors {
@@ -165,13 +158,12 @@ Item {
 
                 delegate: Rectangle {
                     id: delegate_bar
-                    color: "red"
                     height: m_model.getBorderWidth() * 2
                     width: parent.width
 
                     Rectangle {
                         id: deckname
-                        color: "pink"
+                        color: "#76AFDF"
                         width: parent.width * (8/10)
                         border.color: "gray"
                         anchors {
@@ -208,7 +200,7 @@ Item {
 
                     Rectangle {
                         id: new_card
-                        color: "blue"
+                        color: "#76AFDF"
                         width: parent.width * (1/10)
                         border.color: "gray"
                         anchors {
@@ -240,7 +232,7 @@ Item {
 
                     Rectangle {
                         id: review_card
-                        color: "cyan"
+                        color: "#76AFDF"
                         width: parent.width * (1/10)
                         border.color: "gray"
                         anchors {

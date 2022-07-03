@@ -234,3 +234,8 @@ void tablemodel::update_card_states()
     emit this->layoutChanged();
 }
 
+int tablemodel::getNumInternalFields()
+{
+    return m_numInternalFields;
+}
+

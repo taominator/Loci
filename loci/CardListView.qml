@@ -16,29 +16,52 @@ Item {
         property string question_content
         property string answer_content
         delegate: Rectangle {
-            height: m_model.getBorderWidth() * 2
-            color: "red"
+
+            height: index < m_model.getNumInternalFields() ? 0 : m_model.getBorderWidth() * 4
             clip: true
+            z: 10
             width: listView.width
 
+            Rectangle {
+                height: m_model.getBorderWidth() * 2
+                color: "#D5E9F9"
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+
+            Rectangle {
+                height: m_model.getBorderWidth() * 2
+                color: "#90CBFC"
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+
             Text {
-                height: parent.height / 2
                 anchors {
                     left: parent.left
                     right: parent.right
                     top: parent.top
                 }
-                text: field
+                padding: m_model.getBorderWidth() / 2
+                font.pixelSize: m_model.getBorderWidth() / 1
+                text: "Field: " + field
             }
 
             property string original_content
             TextInput {
-                height: parent.height / 2
                 anchors {
                     left: parent.left
                     right: parent.right
                     bottom: parent.bottom
                 }
+                padding: m_model.getBorderWidth() / 2
+                font.pixelSize: m_model.getBorderWidth() / 1
                 text: content
 
                 onEditingFinished: {
