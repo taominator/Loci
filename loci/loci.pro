@@ -13,20 +13,20 @@ HEADERS += \
     deck.h \
     tablemodel.h
 
-resources.files = main.qml \
-    TopBar.qml \
-    deckscreen.qml \
-    homescreen.qml \
-    DeckTableView.qml \
-    DeckTableView2.qml \
-    CardListView.qml \
-    deckedit.qml \
-    reviewscreen.qml \
-    previewscreen.qml
+#resources.files = main.qml \
+#    TopBar.qml \
+#    deckscreen.qml \
+#    homescreen.qml \
+#    DeckTableView.qml \
+#    DeckTableView2.qml \
+#    CardListView.qml \
+#    deckedit.qml \
+#    reviewscreen.qml \
+#    previewscreen.qml
 
 
 resources.prefix = /$${TARGET}
-RESOURCES += resources \
+RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -39,12 +39,12 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    CardListView.qml \
-    DeckTableView.qml \
-    DeckTableView2.qml \
-    deckedit.qml \
-    previewscreen.qml \
-    reviewscreen.qml
+#DISTFILES += \
+#    CardListView.qml \
+#    DeckTableView.qml \
+#    DeckTableView2.qml \
+#    deckedit.qml \
+#    previewscreen.qml \
+#    reviewscreen.qml
 
 

@@ -1,0 +1,2 @@
+C:\Qt\6.2.2\mingw_64\bin\windeployqt "C:\Git Repository\Loci\deploy\loci.exe"
+windeployqt --qmldir C:\loci C:\deploy\loci.exe

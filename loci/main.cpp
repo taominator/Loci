@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     DBManager.m_card_model.test();
 
     QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/loci/main.qml"_qs);
+    const QUrl url(u"qrc:/qml/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
