@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 
 Item {
     anchors.fill: parent
@@ -75,14 +76,17 @@ Item {
                         left: placeholder_deck.right
                     }
 
-                    TextInput {
+                    TextField {
                         id: deck_deck_input
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left
                         }
                         font.pixelSize: parent.height / 3
-                        text: "Enter deckname here"
+                        placeholderText: qsTr("Enter deckname here")
+                        background: Rectangle {
+                            opacity: 0
+                        }
                     }
                 }
 
@@ -99,7 +103,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "#0276D6"
+                    color: add_deck_area.containsMouse? "#51979F" : "#0276D6"
                     id: add_deck
                     width: parent.width / 2
                     anchors {
@@ -113,6 +117,8 @@ Item {
                         font.pixelSize: parent.height / 3
                     }
                     MouseArea {
+                        id: add_deck_area
+                        hoverEnabled: true
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
 
@@ -123,7 +129,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "#316A99"
+                    color: delete_deck_area.containsMouse? "#51979F" : "#316A99"
                     id: delete_deck
                     width: parent.width / 2
                     anchors {
@@ -137,6 +143,8 @@ Item {
                         font.pixelSize: parent.height / 3
                     }
                     MouseArea {
+                        id: delete_deck_area
+                        hoverEnabled: true
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
 
@@ -213,14 +221,17 @@ Item {
                         left: placeholder_field.right
                     }
 
-                    TextInput {
+                    TextField {
                         id: field_field_input
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left
                         }
                         font.pixelSize: parent.height / 3
-                        text: "Enter fieldname here"
+                        placeholderText: qsTr("Enter fieldname here")
+                        background: Rectangle {
+                            opacity: 0
+                        }
                     }
                 }
 
@@ -263,14 +274,17 @@ Item {
                         left: placeholder_deck_field.right
                     }
 
-                    TextInput {
+                    TextField {
                         id: field_deck_input
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left
                         }
                         font.pixelSize: parent.height / 3
-                        text: "Enter deckname here"
+                        placeholderText: qsTr("Enter deckname here")
+                        background: Rectangle {
+                            opacity: 0
+                        }
                     }
                 }
 
@@ -286,7 +300,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "#0276D6"
+                    color: add_field_area.containsMouse? "#51979F" : "#0276D6"
                     id: add_field
                     width: parent.width / 2
                     anchors {
@@ -300,6 +314,8 @@ Item {
                         font.pixelSize: parent.height / 3
                     }
                     MouseArea {
+                        id: add_field_area
+                        hoverEnabled: true
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
 
@@ -310,7 +326,7 @@ Item {
                 }
 
                 Rectangle {
-                    color: "#316A99"
+                    color: delete_field_area.containsMouse? "#51979F" : "#316A99"
                     id: delete_field
                     width: parent.width / 2
                     anchors {
@@ -324,6 +340,8 @@ Item {
                         font.pixelSize: parent.height / 3
                     }
                     MouseArea {
+                        id: delete_field_area
+                        hoverEnabled: true
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
 

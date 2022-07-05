@@ -3,10 +3,17 @@
 #include <QtDebug>
 #include <QStandardPaths>
 #include <QSqlError>
+#include <QDir>
 
 dbmanager::dbmanager(QObject *parent)
     : QObject{parent}
 {
+    //check if appdata path directory exists. If not, make the directory
+    QString path(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    QDir dir;
+    if (!dir.exists(path))
+        dir.mkpath(path);
+
     //make first database connection and send db1 to m_model
     m_db1 = QSqlDatabase::addDatabase("QSQLITE", "db1");
     m_db1.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/decks.db");
@@ -165,7 +172,7 @@ void dbmanager::reset_cards()
     for(int i = 0; i < m_model.m_selectedIds.size(); i++)
     {
         QSqlQuery query(m_db1);
-        querystring = "UPDATE " + m_selected_table + " SET previous_date = 0, review_date = 0, interval = 1, ease = 2.5, card_state = 'New' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
+        querystring = "UPDATE " + m_selected_table + " SET previous_date = '', review_date = '', interval_left = -1, ease = 2.5, easy_bonus = 1.3, card_state = 'New' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
         query.exec(querystring);
     }
 }
@@ -244,7 +251,6 @@ void dbmanager::suspend_cards()
         QSqlQuery query(m_db1);
         querystring = "UPDATE " + m_selected_table + " SET interval_left = " + QString::number(interval_left) + ", card_state = 'Suspended' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
         query.exec(querystring);
-        qInfo() << querystring;
     }
 }
 
@@ -264,7 +270,6 @@ void dbmanager::unsuspend_cards()
             QSqlQuery query(m_db1);
             querystring = "UPDATE " + m_selected_table + " SET previous_date = '" + new_dates[0] + "', review_date = '" + new_dates[1] + "', card_state = '" + new_dates[2] + "' WHERE id = " + QString::number(m_model.m_selectedIds[i]) + ";";
             query.exec(querystring);
-            qInfo() << querystring;
         }
     }
 }
@@ -283,13 +288,12 @@ void dbmanager::create_table(QString my_table)
     querystring += "Answer TEXT DEFAULT 'answer_field', ";
     querystring += "previous_date TEXT, ";
     querystring += "review_date TEXT, ";
-    querystring += "graduating_interval INTEGER, ";
+    querystring += "interval_left INTEGER, ";
     querystring += "ease REAL, ";
     querystring += "easy_bonus REAL, ";
     querystring += "interval_modifier REAL, ";
     querystring += "card_state TEXT );";
 
-    //qInfo() << querystring;
 
     QSqlQuery query(m_db1);
     query.prepare(querystring);
@@ -334,7 +338,6 @@ void dbmanager::create_field(QString my_table, QString my_field)
     }
 
 
-    qInfo() << querystring;
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -379,7 +382,6 @@ void dbmanager::drop_field(QString my_table, QString my_field)
     }
 
 
-    qInfo() << querystring;
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -401,8 +403,7 @@ int dbmanager::get_height(bool show_front, int row)
 
 int dbmanager::getNumNewCards(QString my_table)
 {
-    QString today_date = m_today.toString(m_time_format);
-    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'New' AND review_date = '" + today_date + "';";
+    QString querystring = "SELECT COUNT(1) FROM " + my_table + " WHERE card_state = 'New'";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -448,8 +449,7 @@ bool dbmanager::setReviewCard(QString my_table)
 
 bool dbmanager::setNewCard(QString my_table)
 {
-    QString today_date = m_today.toString(m_time_format);
-    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'New' AND review_date = '" + today_date + "';";
+    QString querystring = "SELECT * FROM " + my_table + " WHERE card_state = 'New'";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
@@ -499,7 +499,6 @@ void dbmanager::againButton()
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
-    qInfo() << querystring;
 }
 
 void dbmanager::hardButton()
@@ -533,13 +532,11 @@ void dbmanager::hardButton()
     QString new_previous_date = m_today.toString(m_time_format);
     QString new_review_date = newReview.toString(m_time_format);
 
-    qInfo() << ease;
-    qInfo() << new_ease;
+
     QString querystring = "UPDATE " + my_table + " SET previous_date = '" + new_previous_date + "', review_date = '" + new_review_date + "', ease = " + QString::number(new_ease) + ", card_state = 'Review' WHERE deckname = '" + my_table + "' AND id = '" + id + "';";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
-    qInfo() << querystring;
 }
 
 void dbmanager::goodButton()
@@ -565,13 +562,11 @@ void dbmanager::goodButton()
     QString new_previous_date = m_today.toString(m_time_format);
     QString new_review_date = newReview.toString(m_time_format);
 
-    qInfo() << ease;
-    qInfo() << new_ease;
+
     QString querystring = "UPDATE " + my_table + " SET previous_date = '" + new_previous_date + "', review_date = '" + new_review_date + "', ease = " + QString::number(new_ease) + ", card_state = 'Review' WHERE deckname = '" + my_table + "' AND id = '" + id + "';";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
-    qInfo() << querystring;
 }
 
 void dbmanager::easyButton()
@@ -598,13 +593,10 @@ void dbmanager::easyButton()
     QString new_previous_date = m_today.toString(m_time_format);
     QString new_review_date = newReview.toString(m_time_format);
 
-    qInfo() << ease;
-    qInfo() << new_ease;
     QString querystring = "UPDATE " + my_table + " SET previous_date = '" + new_previous_date + "', review_date = '" + new_review_date + "', ease = " + QString::number(new_ease) + ", card_state = 'Review' WHERE deckname = '" + my_table + "' AND id = '" + id + "';";
     QSqlQuery query(m_db1);
     query.prepare(querystring);
     query.exec();
-    qInfo() << querystring;
 }
 
 QString dbmanager::getCardType()

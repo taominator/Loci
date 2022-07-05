@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 
 Item {
     anchors.fill: parent
@@ -54,7 +55,7 @@ Item {
             }
 
             property string original_content
-            TextInput {
+            TextField {
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -63,6 +64,10 @@ Item {
                 padding: m_model.getBorderWidth() / 2
                 font.pixelSize: m_model.getBorderWidth() / 1
                 text: content
+                placeholderText: qsTr("Enter field content here")
+                background: Rectangle {
+                    opacity: 0
+                }
 
                 onEditingFinished: {
                     if (parent.original_content == listView.question_content) {

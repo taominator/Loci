@@ -20,8 +20,10 @@ Rectangle {
             top: parent.top
             bottom: parent.bottom
         }
-        color: "#838383"
+        color: home_area.containsMouse? "#51979F" : "#838383"
         MouseArea {
+            id: home_area
+            hoverEnabled: true
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: {
@@ -44,8 +46,10 @@ Rectangle {
             top: parent.top
             bottom: parent.bottom
         }
-        color: "#B4B5B7"
+        color: deck_area.containsMouse? "#51979F" : "#B4B5B7"
         MouseArea {
+            id: deck_area
+            hoverEnabled: true
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: {
@@ -68,8 +72,10 @@ Rectangle {
             top: parent.top
             bottom: parent.bottom
         }
-        color: "#838383"
+        color: preview_area.containsMouse? "#51979F" : "#838383"
         MouseArea {
+            id: preview_area
+            hoverEnabled: true
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: {
@@ -92,8 +98,10 @@ Rectangle {
             top: parent.top
             bottom: parent.bottom
         }
-        color: "#B4B5B7"
+        color: edit_area.containsMouse? "#51979F" : "#B4B5B7"
         MouseArea {
+            id: edit_area
+            hoverEnabled: true
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: {
@@ -117,13 +125,13 @@ Rectangle {
             bottom: parent.bottom
         }
         color: "#838383"
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
+        //MouseArea {
+        //    anchors.fill: parent
+        //    cursorShape: Qt.PointingHandCursor
+        //    onClicked: {
 
-            }
-        }
+        //    }
+        //}
     }
 
 }

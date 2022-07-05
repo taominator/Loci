@@ -104,13 +104,15 @@ Item {
                 id: minimize_state
                 height: m_model.getBorderWidth() * 1.5
                 width: m_model.getBorderWidth()
-                color: "black"
+                color: min_state_area.containsMouse? "#51979F" : "black"
                 anchors{
                     top: parent.top
                     left: parent.left
                 }
 
                 MouseArea {
+                    id: min_state_area
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
@@ -217,13 +219,15 @@ Item {
                 id: minimize_decklist
                 height: m_model.getBorderWidth() * 1.5
                 width: m_model.getBorderWidth()
-                color: "gray"
+                color: min_decklist_area.containsMouse? "#51979F" : "gray"
                 anchors{
                     top: parent.top
                     left: parent.left
                 }
 
                 MouseArea {
+                    id: min_decklist_area
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
@@ -346,7 +350,7 @@ Item {
 
             Rectangle{
                 id: add_card
-                color: "#1669B2"
+                color: add_area.containsMouse? "#51979F" : "#1669B2"
                 width: parent.width / 5
                 clip: true
                 anchors {
@@ -362,6 +366,8 @@ Item {
                     anchors.centerIn: parent
                 }
                 MouseArea {
+                    id: add_area
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
 
@@ -376,7 +382,7 @@ Item {
 
             Rectangle{
                 id: delete_card
-                color: "#1669B2"
+                color: delete_area.containsMouse? "#51979F" : "#1669B2"
                 width: parent.width / 5
                 clip: true
                 anchors {
@@ -392,6 +398,8 @@ Item {
                     anchors.centerIn: parent
                 }
                 MouseArea {
+                    id: delete_area
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
 
@@ -406,7 +414,7 @@ Item {
 
             Rectangle{
                 id: reset_card
-                color: "#1669B2"
+                color: reset_area.containsMouse? "#51979F" : "#1669B2"
                 width: parent.width / 5
                 clip: true
                 anchors {
@@ -422,6 +430,8 @@ Item {
                     anchors.centerIn: parent
                 }
                 MouseArea {
+                    id: reset_area
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
 
@@ -436,7 +446,7 @@ Item {
 
             Rectangle{
                 id: suspend_card
-                color: "#1669B2"
+                color: suspend_area.containsMouse? "#51979F" : "#1669B2"
                 width: parent.width / 5
                 clip: true
                 anchors {
@@ -453,6 +463,8 @@ Item {
                     anchors.centerIn: parent
                 }
                 MouseArea {
+                    id: suspend_area
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
 
@@ -467,7 +479,7 @@ Item {
 
             Rectangle{
                 id: unsuspend
-                color: "#1669B2"
+                color: unsuspend_area.containsMouse? "#51979F" : "#1669B2"
                 width: parent.width / 5
                 clip: true
                 anchors {
@@ -483,6 +495,8 @@ Item {
                     anchors.centerIn: parent
                 }
                 MouseArea {
+                    id: unsuspend_area
+                    hoverEnabled: true
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
 
