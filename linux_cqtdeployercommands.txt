@@ -1,0 +1,6 @@
+cqtdeployer -bin loci -qmake /home/taominator/Qt/6.3.1/gcc_64/bin/qmake -qmlDir /home/taominator/MyFolder/Qt_Projects/build-loci-Desktop_Qt_6_3_1_GCC_64bit-Release/
+
+/home/taominator/CQtDeployer/1.5/cqtdeployer.sh -bin loci -qmake /home/taominator/Qt/6.3.1/gcc_64/bin/qmake -qmlDir /home/taominator/MyFolder/Qt_Projects/build-loci-Desktop_Qt_6_3_1_GCC_64bit-Release/
+
+cqtdeployer -bin loci -qmake /home/taominator/Qt/6.3.1/gcc_64/bin/qmake -qmlDir /home/taominator/MyFolder/Qt_Projects/loci qif
+

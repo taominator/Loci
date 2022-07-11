@@ -1,0 +1,2 @@
+/Users/taosif/Qt/6.3.1/macos/bin/macdeployqt /Users/taosif/loci_macOS/build-loci_macOS-
+Qt_6_3_1_for_macOS-Release/apploci_macOS.app -qmldir=/Users/taosif/loci_macOS -dmg
