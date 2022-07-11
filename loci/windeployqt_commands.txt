@@ -1,2 +1,16 @@
-C:\Qt\6.2.2\mingw_64\bin\windeployqt "C:\Git Repository\Loci\deploy\loci.exe"
+<copy source folder and deploy folder to C:\>
+cd <deploy folder path>
+C:\Qt\6.2.2\mingw_64\bin\windeployqt "C:\deploy\loci.exe"
+cd C:\Qt\6.2.2\mingw_64\bin
+windeployqt.exe
 windeployqt --qmldir C:\loci C:\deploy\loci.exe
+<copy missing .dll files from qt\bin to deploy folder>
+
+
+<copy source folder and deploy folder to C:\>
+cd <deploy folder path>
+C:\Qt\6.2.2\mingw_64\bin\windeployqt "C:\deploy\loci_windows.exe"
+cd C:\Qt\6.2.2\mingw_64\bin
+windeployqt.exe
+windeployqt --qmldir C:\loci_windows C:\deploy\loci_windows.exe
+<copy missing .dll files from qt\bin to deploy folder>
